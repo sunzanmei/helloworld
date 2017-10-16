@@ -1,0 +1,47 @@
+#set($layout='layoutHome.vm')
+<div class="mpm-head">
+    <div class="mpg-section clrfix">
+        <div class="mpm-head-hd">
+            <a href="/home" hidefocus="true" title="去哪儿" class="logo">去哪儿</a>
+            <strong class="role"></strong>
+            <em class="name">门票管理系统</em>
+        </div>
+        <div class="mpm-head-bd">
+            <div class="nav clrfix" id="mainmenus">
+		        <a href="javascript:void(0);" hidefocus="true" class="nav-item nav-selected" id="order" data-submenu="ordermenu">订单管理</a>
+		        <a href="javascript:void(0);" hidefocus="true" class="nav-item on" id="product" data-submenu="productmenu">产品管理</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrap">
+	<div class="content">
+		<table class="tb_layout" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td class="left_bg">
+					<div class="left" id="submenus">
+						#parse('include/module/ordermenu.vm')
+						<div id="productmenu" class="menu item on" style="display: none;">
+							<h3 class="tree-node">门票产品</h3>
+							<ul class="submenu">
+                                <li><a target="frame" data-leaf="true" class="menu-item on" href="$!{productCenterHost}/home">产品中心</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/specialrate/product/list/onSale">上架中的产品</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/specialrate/product/list/offline">仓库中的产品</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/specialrate/product/list/waitAudit">待审核的产品</a></li>
+                                <li><a target="frame" data-leaf="true" class="menu-item" href="/specialrate/rate/list/specialrateList">特殊费率管理</a></li>
+							</ul>
+						</div>
+					</div>
+				</td>
+				<td class="rig_bg"><div class="right" id="frame-container"></div></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	window.context = {
+		//defaultMenu: "productnavi"
+		permission: "specialrate"
+	};
+</script>

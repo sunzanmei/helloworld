@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Qunar管理后台</title>
+    <meta name="keywords" content="Qunar管理后台">
+    <meta name="description" content="Qunar管理后台">
+    <link rel="stylesheet" type="text/css" href="http://qunarzz.com/piao_tts/prd/styles/v2/detail@9b7bb908fafb9da417f93bc18cd3b781.css">
+    <link rel="stylesheet" type="text/css" href="http://qunarzz.com/piao_tts/prd/styles/v2/list@12d870584660f131bd2807926611a4c7.css">
+</head>
+
+<body>
+    #if($shiro.hasPermission("order_detail_order_base_info"))
+    <h3 class="caption"><i class="sign"></i>订单基本信息</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                <tr>
+                    <td width="33%"><b>订单号：</b>$!{hotelOrder.orderId}</td>
+                    <td width="33%"><b class="ml30">订单状态：</b><span class="txt_orange">$!{hotelOrder.orderStatus}</span></td>
+                    <td><b>下单时间：</b>$!dateTool.format("yyyy-MM-dd HH:mm",$!{hotelOrder.createTime})</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>产品id：</b>$!{hotelOrder.productId}
+                    </td>
+                    <td>
+                        <b>产品名称：</b>
+                        <a href="/order/hotelOrderDetail?displayId=$!{hotelOrder.displayId}" target="_blank">$!{hotelOrder.hotelName}</a>
+
+                    </td>
+                    <td> <b>所在城市：</b><span>$!{hotelOrder.city}</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>单价：</b>
+                        <b>
+                            <em><span class="yen_font">&yen;
+                            </span>
+                                $!hotelOrder.unitPrice
+                            </em>
+                        </b>
+                    </td>
+                    <td> <b>数量：</b> $!{hotelOrder.roomsCount}</td>
+                    <td>
+                        <b>订单金额：</b>
+                        <b class="price txt_orange">
+                            <em><span class="yen_font">&yen;</span>
+                                $hotelOrder.totalPrice
+                            </em>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>入住日期：</b>$!{hotelOrder.arrivalDate}</td>
+                    <td><b>房型信息：</b>$!{hotelOrder.roomName}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+    #if($shiro.hasPermission("order_detail_contact"))
+    <h3 class="caption"><i class="sign"></i>联系人信息</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td width="33%"><b>取票人：</b><span>$!{hotelOrder.contactUser}</span></td>
+                    <td width="33%"><b>手机号：</b><span>$!{hotelOrder.contactMobile}</span></td>
+                    <td></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+<script src="http://qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@b86a814a353d5f1ef0dc2fa2790e3245.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qunarzz.com/piao_tts/prd/scripts/cpanel/list@9e2a8f0db9ae5d985ec6b9a99815548b.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://qunarzz.com/piao_tts/prd/scripts/cpanel/order/orderdetailpage@3b586150041ef27f11d5020f960e6737.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    window.context = {
+        displayId: "${hotelOrder.displayId}",
+        price: "${hotelOrder.originMoney}",
+        orderApi: "/order",
+        merchantCenterHost:"$!{merchantCenterHost}",
+        permission: "$!{permission}",
+        flag: "$!{hotelOrder.straightSaleType}"
+    };
+   // (new tts.cpanel.order.OrderDetailPageInit(window.context)).init();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<mailSubject>【去哪儿网门票新订单】</mailSubject>
+
+<mailContent>
+	订单：${productTitle}（订单号${orderDisplayId}）。含${orderQuantity}份，总金额${orderOrigin}元。请尽快处理！
+</mailContent>

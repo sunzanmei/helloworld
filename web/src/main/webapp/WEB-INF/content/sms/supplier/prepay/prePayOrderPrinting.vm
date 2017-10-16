@@ -1,0 +1,8 @@
+<!--
+预付，预授权成功，供应商
+-->
+
+<smsContent>
+    【${productTitle}】。${orderQuantity}份。（${orderOrigin}）#if($!{userContactName})联系人：${userContactName}，#{end}联系电话：${userContact}。请尽快确认订单，否则系统将于${hotelConfirmEndTime}自动退款
+</smsContent>
+

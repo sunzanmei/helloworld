@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <title>Qunar管理员后台</title>
+    <meta name="keywords" content="Qunar管理员后台">
+    <meta name="description" content="Qunar管理员后台">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/scenic_data@f04037717ca2e687a62744db3cdd459d.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="spec-block search-bar">
+        <label>切换景区：</label>
+        <select id="sight-selector">
+            #foreach(${sight} in ${sights})
+                <option value="$!{sight.sightId}" #if($!{sight.sightId}==${nowSightId})selected="selected" #end>$!{sight.sightName}</option>
+            #end
+        </select>
+    </div>
+
+
+    <div class="spec-block">
+        <div id="sale-date-selector"></div>
+        <div id="sale-summary" style="margin:20px;">loading...</div>
+    </div>
+
+    <div class="spec-block">
+        <div id="pay-date-selector"></div>
+        <table width="100%" style="margin-top:15px;">
+            <tr>
+                <td width="40%">
+                    <p style="text-align: center;">现付订单</p>
+                    <div id="cash-summary" style="margin:20px;margin-right:0;">loading...</div>
+                </td>
+                <td>
+                    <p style="text-align: center;">预付订单</p>
+                    <div id="pre-summary" style="margin:20px;">loading...</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="spec-block">
+        <div id="type-date-selector"></div>
+        <div id="type-chart" style="margin-top:20px;width:100%;height:350px;">loading...</div>
+    </div>
+
+    <div class="spec-block">
+        <div id="trend-date-selector"></div>
+        <div id="trend-chart" style="margin-top:20px;width:100%;height:350px;">loading...</div>
+    </div>
+
+</div>
+
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/js/qdatepicker/build/qdatepicker-0.1.min.js" type="text/javascript"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/common/echarts-plain-original.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/scenic/directsalepageinit@ecba3786582069757f5ca01a7caaf83b.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    document.domain = 'qunar.com';
+    window.context = {
+        api: " /scenicData/analytics",
+        permission: "scenic",
+        supplierType: "DISTRIBUTE"
+    };
+    (new tts.cpanel.scenic.DirectSalePageInit(window.context)).init();
+</script>
+</body>
+</html>

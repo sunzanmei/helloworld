@@ -1,0 +1,6 @@
+<!--
+预付，订单确认成功，用户
+-->
+<smsContent>
+    您购买的${orderQuantity}份【${productTitle}】（订单号${orderDisplayId}）已确认成功！酒店入住时间：${hotelConsumeTime}，门票游玩时间：${hotelPiaoConsumeTime},#{if}(${orderEticket}&&${orderEticket}!="")【电子票：${orderEticket}】#{end}。#{if}(${passMessageInfo})$!{passMessageInfo}。#{end} 如有疑问，请咨询服务商${supplierShopName} ${supplierTel}。
+</smsContent>

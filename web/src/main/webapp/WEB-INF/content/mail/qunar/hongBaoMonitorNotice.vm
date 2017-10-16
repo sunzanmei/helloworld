@@ -1,0 +1,31 @@
+<!--
+供应商刷红包监控信息
+-->
+
+<mailSubject>供应商刷红包监控信息</mailSubject>
+
+<mailContent>
+    <style type="text/css">
+        table { border: solid 1px #e1e1e8; border-collapse: collapse; }
+        tr td { padding: 3px 15px; height: 25px; border: solid 1px #e1e1e8; }
+        .head { background-color: #f7f7f9; }
+    </style>
+    <table>
+        <tr class="head">
+            <td>日期</td>
+            <td>店铺名称</td>
+            <td>支付订单量</td>
+            <td>使用红包订单量</td>
+            <td>红包使用比例</td>
+        </tr>
+        #foreach ($hongBaoMonitorResult in $hongBaoMonitorResultList)
+            <tr>
+                <td>$!hongBaoMonitorResult.date</td>
+                <td>$!hongBaoMonitorResult.shopName</td>
+                <td>$!hongBaoMonitorResult.payNum</td>
+                <td>$!hongBaoMonitorResult.hongBaoNum</td>
+                <td>$!{hongBaoMonitorResult.hongBaoRate}%</td>
+            </tr>
+        #end
+    </table>
+</mailContent>

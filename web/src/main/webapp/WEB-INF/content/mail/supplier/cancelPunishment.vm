@@ -1,0 +1,23 @@
+<!--
+取消供应商处罚邮件
+-->
+<mailSubject>【去哪儿网门票】违规处罚解除通知</mailSubject>
+
+<mailContent>
+    <p>
+        <br>尊敬的Qunar门票商家</br>
+        <br/>
+        <br>商家店铺名:$!{shopName}</br>
+        <br>订单号:$!{displayId}</br>
+        <br>产品名称:$!{productName}</br>
+        <br>产品Id:$!{productId}</br>
+        <br>处罚原因:$!{punishmentReason}</br>
+        <br>处罚详情:$!{punishmentDetail}</br>
+        <br>处罚结果:$!{punishmentResult}</br>
+        <br>处罚已解除，如有问题请联系对接运营。</br>
+    </p>
+    <p>
+        <span style="margin-left: 450px">去哪儿网门票业务部</span></br>
+        <span style="margin-left: 450px">$now</span>
+    </p>
+</mailContent>

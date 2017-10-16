@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title>订单支付</title>
+
+</head>
+
+<body>
+<form action="/sadmin/toolbox?method=transferBack" method="post">
+    <table width="50%" align="center" border="1">
+        <tr>
+            <td colspan="2" align="center">手动退款</td>
+        </tr>
+        <tr>
+            <td>refAmount</td>
+            <td><input name="refAmount"/></td>
+        </tr>
+        <tr>
+            <td>shareData</td>
+            <td><input name="shareData"/></td>
+        </tr>
+        <tr>
+            <td>payTime</td>
+            <td><input name="payTime"/></td>
+        </tr>
+        <tr>
+            <td>paySeq</td>
+            <td><input name="paySeq"/></td>
+        </tr>
+        <tr>
+            <td>traceSeq</td>
+            <td><input name="traceSeq"/></td>
+        </tr>
+        <tr>
+            <td>version</td>
+            <td><input name="version"/></td>
+        </tr>
+        <tr>
+            <td>busiTypeId</td>
+            <td><input name="busiTypeId"/></td>
+        </tr>
+        <tr>
+            <td>merchantCode</td>
+            <td><input name="merchantCode"/></td>
+        </tr>
+        <tr>
+            <td>signKey</td>
+            <td><input name="signKey"/></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </table>
+</form>
+<form action="/sadmin/toolbox/danbaoCancel" method="post">
+    <table width="50%" align="center" border="1">
+        <tr>
+            <td colspan="2" align="center">担保撤销</td>
+        </tr>
+        <tr>
+            <td>cancelAmount</td>
+            <td><input name="cancelAmount"/></td>
+        </tr>
+        <tr>
+            <td>shareData</td>
+            <td><input name="shareData"/></td>
+        </tr>
+        <tr>
+            <td>payTime</td>
+            <td><input name="payTime"/></td>
+        </tr>
+        <tr>
+            <td>paySeq</td>
+            <td><input name="paySeq"/></td>
+        </tr>
+        <tr>
+            <td>traceSeq</td>
+            <td><input name="traceSeq"/></td>
+        </tr>
+        <tr>
+            <td>version</td>
+            <td><input name="version"/></td>
+        </tr>
+        <tr>
+            <td>busiTypeId</td>
+            <td><input name="busiTypeId"/></td>
+        </tr>
+        <tr>
+            <td>merchantCode</td>
+            <td><input name="merchantCode"/></td>
+        </tr>
+        <tr>
+            <td>signKey</td>
+            <td><input name="signKey"/></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

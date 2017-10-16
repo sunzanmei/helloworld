@@ -1,0 +1,6 @@
+<!--
+预付，过期自动取消订单提醒短信模板
+-->
+<smsContent>
+您预订的${productTitle}，订单号：${orderDisplayId}，已超过最晚支付时间，订单已自动取消，如需重新预订
+</smsContent>

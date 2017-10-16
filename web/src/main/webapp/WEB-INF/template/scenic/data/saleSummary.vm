@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <title>Qunar管理员后台</title>
+    <meta name="keywords" content="Qunar管理员后台">
+    <meta name="description" content="Qunar管理员后台">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/scenic_data@f04037717ca2e687a62744db3cdd459d.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="spec-block search-bar">
+        <label>切换景区：</label>
+        <select id="sight-selector">
+			#foreach(${sight} in ${sights})
+				<option value="$!{sight.sightId}" #if($!{sight.sightId}==${nowSightId})selected="selected" #end>$!{sight.sightName}</option>
+			#end
+        </select>
+    </div>
+
+
+    <div class="spec-block deal-count">
+        <table width="100%">
+            <tr>
+                <td><span class="red-small-text">昨日成交(元)</span><br /><span class="red-large-text">$!{baseData.yesterdayTurnover}</span></td>
+                <td><span class="blue-small-text">前日成交(元)</span><br /><span class="blue-large-text">$!{baseData.beforeYesterdayTurnover}</span></td>
+                <td><span class="black-small-text">昨日日期：</span><br /><span class="black-large-text">$!{yesterday}</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <table width="100%">
+        <tr>
+            <td width="65%" valign="top">
+                <div class="spec-block merchant-data">
+                    <table width="100%">
+                        <tr height="50">
+                            <td colspan="2" class="top-rank-title">
+                                近30天景区预订人数排名：$!{baseData.topString}
+                            </td>
+                        </tr>
+                        <tr height="35">
+                            <td width="50%">历史成交金额：<span class="black-number">$!{baseData.orderMoney}</span> 元</td>
+                            <td>平均客单价：<span class="black-number">$!{baseData.moneyPerOrder}</span> 元</td>
+                        </tr>
+                        <tr>
+                            <td>历史成交订单数：<span class="black-number">$!{baseData.orderVolume}</span> 笔</td>
+                            <td>历史成交票数：<span class="black-number">$!{baseData.orderTickets}</span> 张</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td valign="top">
+                <div class="spec-block sale-data">
+                    <table width="100%">
+                        <tr>
+                            <td>直销产品：</td>
+                            <td>$!{baseData.directProductCount}</td>
+                            <td><span class="red-status">在售</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <hr class="short-line" noshade />&nbsp;分销商&nbsp;<hr class="short-line" noshade />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>商家数量：</td>
+                            <td>$!{baseData.distributeSupplierCount}</td>
+                            <td><span class="green-status">在线</span></td>
+                        </tr>
+                        <tr>
+                            <td>在售产品数：</td>
+                            <td>$!{baseData.distributeProductCount}</td>
+                            <td><span class="red-status">在售</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="spec-block" id="sale-chart">
+        <div id="date-select-panel"></div>
+        <table width="100%">
+            <tr width="50%">
+                <td><div id="sale-deal-chart"></div></td>
+                <td><div id="sale-type-chart"></div></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/js/qdatepicker/build/qdatepicker-0.1.min.js" type="text/javascript"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/common/echarts-plain-original.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/scenic/merchantpageinit@b4a82e5e3953503f6d7750f73df6f70d.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    document.domain = 'qunar.com';
+    window.context = {
+        api: " /scenicData/analytics",
+        permission: "scenic"
+    };
+    (new tts.cpanel.scenic.MerchantPageInit(window.context)).init();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<title>Qunar管理员后台</title>
+	<meta name="keywords" content="Qunar管理员后台">
+	<meta name="description" content="Qunar管理员后台">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/list@12d870584660f131bd2807926611a4c7.css">
+</head>
+<body>
+<h3 class="caption"><i class="sign"></i>快速验证</h3>
+<div class="list_condition">
+	<div class="search clrfix">
+		<form id="search-form" method="get" action="/order/queryOrderList">
+			<table>
+				<colgroup><col width="90" /><col width="180" /><col width="80" /><col width="130" /><col width="80" /><col width="230" /><col width="" /></colgroup>
+				<tr>
+					<td class="align_right"><label for="code" class="unit bold">验证码</label></td>
+					<td><input type="text" value="" class="fill w_l" id="code" name="code" /></td>
+					<td colspan="4"><a href="javascript:void(0)" hidefocus="true" id="submitbutton" class="btn btn_orange">查询</a></td>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<div class="list_cont">
+	<div id="list-container"></div>
+</div>
+
+<h3 class="caption"><i class="sign"></i>验证成功记录</h3>
+<div class="list_cont">
+    <div id="history-container"></div>
+    <div id="history-pagination"></div>
+</div>
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@8840d39a982329c1d87231f7e628ca98.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/list@9e2a8f0db9ae5d985ec6b9a99815548b.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/order/consumepage@7b4ea8643ab0fc47797a35c795dcde18.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	window.context = {
+		api: "/order",
+        permission: "$!{permission}"
+	};
+	(new tts.cpanel.order.ConsumePageInit(window.context)).init();
+</script>
+</body>
+</html>

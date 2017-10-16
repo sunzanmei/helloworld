@@ -1,0 +1,5 @@
+<mailSubject>【去哪儿网门票订单申请退款】</mailSubject>
+
+<mailContent>
+	订单：${productTitle}（订单号${orderDisplayId}，总金额${orderOrigin}元），申请退款${orderRefundMoney}元。请于24小时内处理。
+</mailContent>

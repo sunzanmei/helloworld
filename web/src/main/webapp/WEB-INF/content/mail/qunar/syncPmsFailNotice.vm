@@ -1,0 +1,25 @@
+<!--
+同步权限数据到pms系统
+-->
+
+<mailSubject>同步权限系统数据错误信息</mailSubject>
+
+<mailContent>
+    <style type="text/css">
+        table { border: solid 1px #e1e1e8; border-collapse: collapse; }
+        tr td { padding: 3px 15px; height: 25px; border: solid 1px #e1e1e8; }
+        .head { background-color: #f7f7f9; }
+    </style>
+    <table>
+        <tr class="head">
+            <td>用户名称</td>
+            <td>同步失败原因</td>
+        </tr>
+        #foreach ($syncUser in $syncUserList)
+            <tr>
+                <td>$!syncUser.username</td>
+                <td>$!syncUser.failMessage</td>
+            </tr>
+        #end
+    </table>
+</mailContent>

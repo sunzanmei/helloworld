@@ -1,0 +1,67 @@
+#set($layout='layoutHome.vm')
+#if($homeOutputDto.ticketSupplier)
+<div class="mpm-head">
+    <div class="mpg-section clrfix">
+        <div class="mpm-head-hd">
+            <a href="/home" hidefocus="true" title="去哪儿" class="logo">去哪儿</a>
+            <strong class="role"></strong>
+            <em class="name">门票管理系统</em>
+        </div>
+        <div class="mpm-head-bd">
+            <div class="nav clrfix" id="mainmenus">
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item nav-selected" id="b2bproduct" data-submenu="b2bproductmenu">产品管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="order" data-submenu="ordermenu">订单管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="suppliesinfo" data-submenu="suppliermenu">商家信息管理</a>
+            </div>
+        </div>
+    </div>
+</div>
+#end
+
+<div class="wrap">
+	<div class="content">
+		#if($homeOutputDto.ticketSupplier)
+		<table class="tb_layout" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td class="left_bg">
+					<div class="left" id="submenus">
+						<div id="b2bproductmenu" class="menu item on" style="display: none;">
+							<h3 class="tree-node">门票产品</h3>
+							<ul class="submenu">
+								<li><a target="frame" data-leaf="true" class="menu-item on" href="$!{b2bProductListUrl}">上架中的产品</a></li>
+							</ul>
+						</div>
+						#parse('include/module/ordermenu.vm')
+                        <div id="suppliermenu" class="menu itme on" style="display:none ">
+                            <h3 class="tree-node">
+                                <a target="frame" data-leaf="true" class="menu-item on" href="$!{merchantCenterHost}/home">商家信息管理</a>
+                            </h3>
+                        </div>
+					</div>
+				</td>
+				<td class="rig_bg"><div class="right" id="frame-container"></div></td>
+			</tr>
+		</table>
+		#else
+		<style type="text/css">
+		    #piao_yet_open{position:relative;height:200px;padding:100px 20px 0 350px;font-size:14px;font-weight:700;line-height:20px;background:#fff url(http://source.qunar.com/piao/images/error_blue_bg.jpg) 210px 100px no-repeat}
+		    #piao_yet_open p{margin-top:70px;padding-left:30px}
+		</style>
+		<div id="piao_yet_open">
+		    <p>您好，您尚未开通门票业务。</p>
+		</div>
+		#end
+	</div>
+</div>
+<script type="text/javascript">
+	window.context = {
+		//defaultMenu: "productnavi"
+		shops: [
+			#foreach($s in $homeOutputDto.canChangeList)
+				{id: "$!{s.id}", name: "$!{s.name}"},
+			#end
+		],
+        shopId: "$!{shopId}",
+		permission: "distributor"
+	};
+</script>

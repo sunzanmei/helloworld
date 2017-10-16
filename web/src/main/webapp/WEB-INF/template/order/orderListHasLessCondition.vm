@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+    <title>Qunar管理员后台</title>
+    <meta name="keywords" content="Qunar管理员后台">
+    <meta name="description" content="Qunar管理员后台">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/list@12d870584660f131bd2807926611a4c7.css">
+</head>
+<body>
+<h3 class="caption"><i class="sign"></i>订单管理</h3>
+<div id="reminder-container"></div>
+<div class="list_condition">
+    <div class="search clrfix">
+        <form id="search-form" method="post" action="/order/queryOrderList">
+            <input type="hidden" name="remindCondition" id="remindCondition" />
+            <table style="table-layout: fixed; width:948px;">
+                <colgroup><col width="90" /><col width="180" /><col width="80" /><col width="130" /><col width="80" /><col width="230" /><col width="" /></colgroup>
+                <tr>
+                    <td class="align_right"><label for="displayId" class="unit bold">订单号</label></td>
+                    <td><input type="text" value="" class="fill w_l" id="displayId" name="displayId" /></td>
+                    <td colspan="4">
+                        <select id="dateType" name="dateType">
+                            <option value="create">下单时间</option>
+                            <option value="pay">支付时间</option>
+                            #if($shiro.hasRole("scenicOrder"))
+                                <option value="consume">验码时间</option>
+                            #end
+                            <option value="canUseDate">游玩日期</option>
+                        </select>
+                        <input type="text" name="startDate" id="startDate" class="fill w_l datepicker" value="">
+                        <input type="text" name="endDate" id="endDate" class="fill w_l datepicker" value="">
+                    </td>
+                    <td rowspan="3"><a href="javascript:void(0)" hidefocus="true" id="submitbutton" class="btn btn_orange">查询</a></td>
+                </tr>
+                <tr>
+                    <td class="align_right"><label for="productName" class="unit bold">产品名称</label></td>
+                    <td><input type="text" value="" class="fill w_l" id="productName" name="productName" /></td>
+                    #parse('order/queryOrderListStatus.vm')
+                    <td colspan="2" hidden="true">
+                        <label for="isManual" class="unit bold">订单处理方式</label>
+                        <select id="isManual" name="isManual">
+                            <option value="0,1">不限</option>
+                            <option value="1">人工订单</option>
+                            <option value="0">接口订单</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align_right"><label for="contactUser" class="unit bold">联系人</label></td>
+                    <td><input type="text" value="" class="fill w_l" name="contactUser" id="contactUser" /></td>
+                    <td colspan="4">
+                        <label class="unit bold">支付方式</label>
+                        <label for="pay-way-0"><input type="radio" checked="checked" class="radio payWay" name="payWay" value="" id="pay-way-0" />不限&nbsp;&nbsp;</label>
+                        <label for="pay-way-1"><input type="radio" class="radio payWay" name="payWay" value="PREPAY" id="pay-way-1" />在线支付&nbsp;&nbsp;</label>
+                        <label for="pay-way-2"><input type="radio" class="radio payWay" name="payWay" value="CASHPAY" id="pay-way-2" />景区支付&nbsp;&nbsp;</label>
+                    </td>
+                    <td colspan="2" hidden="true"><label for="orderSource" class="unit bold">订单渠道</label>
+                        <select name="orderSource" id="orderSource">
+                            <option value="">不限</option>
+                            <option value="tts">TTS</option>
+                            <option value="tuan">团购</option>
+                            <option value="b2b">B2B</option>
+                        </select>
+                    </td>
+                    <td colspan="2" hidden="true">
+                        <label class="unit bold">订单来源</label>
+                        <label for="sale-platform-0"><input type="radio" checked="checked" class="radio salePlatform" name="saleType" value="" id="sale-platform-0" />不限&nbsp;&nbsp;&nbsp;</label>
+                        <label for="sale-platform-1"><input type="radio" class="radio salePlatform" name="saleType" value="B2C" id="sale-platform-1" />直客&nbsp;&nbsp;&nbsp;</label>
+                        <label for="sale-platform-2"><input type="radio" class="radio salePlatform" name="saleType" value="B2B" id="sale-platform-2" />同行分销&nbsp;&nbsp;&nbsp;</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align_right"><label for="contactMobile" class="unit bold">联系人手机</label></td>
+                    <td><input type="text" value="" class="fill w_l" id="contactMobile" name="contactMobile" /></td>
+                    <td colspan="2" hidden="true"><label for="returnCall" class="unit bold">是否回访</label>
+                        <select id="returnCall" name="returnCall">
+                            <option value="">不限</option>
+                            <option value="1">未回访</option>
+                            <option value="2">已回访</option>
+                        </select>
+                    </td>
+                    <td colspan="3" hidden="true">
+                        <label class="unit bold">是否Qunar代运营</label>
+                        <label for="handle-state-0"><input type="radio" checked="checked" class="radio isQunarOperation" name="isQunarOperation" value="" id="handle-state-0" /> 不限&nbsp;&nbsp;&nbsp;</label>
+                        <label for="handle-state-1"><input type="radio" class="radio isQunarOperation" name="isQunarOperation" value="true" id="handle-state-1" /> 是&nbsp;&nbsp;&nbsp;</label>
+                        <label for="handle-state-2"><input type="radio" class="radio isQunarOperation" name="isQunarOperation" value="false" id="handle-state-2" /> 否&nbsp;&nbsp;&nbsp;</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align_right">
+                        <label class="unit bold">业务类型</label>
+                    </td>
+                    <td colspan="3" id="businessType">
+                        <a href="javascript:void(0);">不限</a>
+                        <label for="business-type-0">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="HOTEL" id="business-type-0">票+房
+                        </label>
+                        <label for="business-type-1">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="TICKET" id="business-type-1">门票
+                        </label>
+                        <label for="business-type-2">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="ONE_DAY_TOUR" id="business-type-2">一日游
+                        </label>
+                        <label for="business-type-3">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="SPU_SHOW" id="business-type-3">演出票
+                        </label>
+                        <label for="business-type-4">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="TEAM_DIRECT" id="business-type-4">直销团购
+                        </label>
+                        <label for="business-type-5">
+                            <input type="checkbox" name="partners[]" class="checkbox" value="CARNIVAL" id="business-type-5"/>玩乐
+                        </label>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td colspan="3" hidden="true">
+                        <label class="unit bold">处理状态</label>
+                        <label for="handle-state-0"><input type="radio" checked="checked" class="radio isCompeted" name="isCompleted" value="" id="handle-state-0" /> 不限&nbsp;&nbsp;&nbsp;</label>
+                        <label for="handle-state-1"><input type="radio" class="radio isCompeted" name="isCompleted" value="1" id="handle-state-1" /> 待出票&nbsp;&nbsp;&nbsp;</label>
+                        <label for="handle-state-2"><input type="radio" class="radio isCompeted" name="isCompleted" value="2" id="handle-state-2" /> 已出票&nbsp;&nbsp;&nbsp;</label>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="list_cont">
+    <div class="list_sort" style="width: 10px;"></div>
+    <div class="list_operate posi_top">
+        #if($shiro.hasPermission("order_list_exportOrder"))
+            <a href="javascript:void(0)" hidefocus="true" id="export-order1" class="do do_blue"><i class="icon i_out"></i>导出订单信息</a>
+        #end
+    </div>
+    <div id="list-container"></div>
+    <div class="list_operate">
+        #if($shiro.hasPermission("order_list_exportOrder"))
+            <a href="javascript:void(0)" hidefocus="true" id="export-order2" class="do do_blue"><i class="icon i_out"></i>导出订单信息</a>
+        #end
+    </div>
+    <div id="pagination"></div>
+</div>
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@b86a814a353d5f1ef0dc2fa2790e3245.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/js/qdatepicker/build/qdatepicker-0.1.min.js" type="text/javascript"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/list@9e2a8f0db9ae5d985ec6b9a99815548b.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/order/orderlistpage@5ddd929893bb946d6a4f948ac9d070bf.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    window.context = {
+        checkBatchOrderApi:"${b2bHost}/common/checkBatchOrder",
+        listApi: "/order",
+        permission: "$!{permission}",
+        conditions: [$!{conditions}]
+    };
+    (new tts.cpanel.order.OrderListPageInit(window.context)).init();
+</script>
+</body>
+</html>

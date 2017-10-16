@@ -1,0 +1,90 @@
+<iframe id="callcenter-toolbar" src="http://fuwu.qunar.com/qcc/html/mp/toolbar.html" style="display:none;position:absolute;width:620px;height:60px;top:0;right:0;z-index:1"></iframe>
+#set($layout='layoutHome.vm')
+<div class="mpm-head">
+    <div class="mpg-section clrfix">
+        <div class="mpm-head-hd">
+            <a href="/home" hidefocus="true" title="去哪儿" class="logo">去哪儿</a>
+            <strong class="role"></strong>
+            <em class="name">门票管理系统</em>
+        </div>
+        <div class="mpm-head-bd">
+            <div class="nav clrfix" id="mainmenus">
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item nav-selected" id="order" data-submenu="ordermenu">订单管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="product" data-submenu="productmenu">产品管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="supplier" data-submenu="suppliermenu">门票设置</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="callmanagement" data-submenu="callmanagementmenu">话务管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="authorize" data-submenu="authorizemenu">权限管理</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="maintain" data-submenu="maintainmenu">运营工具</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="announcement" data-submenu="announcementmenu">门票服务</a>
+                <a href="javascript:void(0);" hidefocus="true" class="nav-item" id="supplierService" data-submenu="supplierServicemenu">商家服务</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap">
+	<div class="content">
+		<table class="tb_layout" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td class="left_bg">
+					<div class="left" id="submenus">
+						#parse('include/module/ordermenu.vm')
+						<div id="productmenu" class="menu item on" style="display: none;">
+							<h3 class="tree-node">门票产品</h3>
+							<ul class="submenu">
+                                <li><a target="frame" data-leaf="true" class="menu-item on" href="$!{productCenterHost}/home">产品中心</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/sadmin/product/list/onSale">上架中的产品</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/sadmin/product/list/offline">仓库中的产品</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/sadmin/product/list/waitAudit">待审核的产品</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="$!{productCenterHost}/sadmin/product/list/ticketTypeTuan">团购票种管理</a></li>
+							</ul>
+						</div>
+						<div id="suppliermenu" class="menu item on" style="display: none;">
+							<h3 class="tree-node">门票设置</h3>
+							<ul class="submenu">
+                                <li><a target="frame" data-leaf="true" class="menu-item on" href="$!{merchantCenterHost}/home">商户配置</a></li>
+							</ul>
+						</div>
+						<div id="authorizemenu" class="menu item on" style="display: none;">
+							<h3 class="tree-node">管理员帐号</h3>
+							<ul class="submenu">
+								<li><a target="frame" data-leaf="true" class="menu-item" href="/sadmin/authority/editAdmainAuthority">添加管理员</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="/sadmin/authority/admainAuthoritylist">管理员列表</a></li>
+							</ul>
+							<h3 class="tree-node">景区权限管理</h3>
+							<ul class="submenu">
+								<li><a target="frame" data-leaf="true" class="menu-item" href="/sadmin/authority/editSightAuthority">添加管理员</a></li>
+								<li><a target="frame" data-leaf="true" class="menu-item" href="/sadmin/authority/sightAuthoritylist">管理员列表</a></li>
+							</ul>
+						</div>
+                       <div id="maintainmenu" class="menu item on" style="display: none;">
+                            <ul class="submenu">
+                                <li><a target="frame" data-leaf="true" class="menu-item" href="/sadmin/autoRefundConfig/autoRefundConfig">逾期自动退款设置</a></li>
+                            </ul>
+                        </div>
+                        <div id="callmanagementmenu" class="menu item on" style="display: none;">
+                            <h3 class="tree-node">
+                                <a target="frame" class="menu-item" data-leaf="true" href="$!{merchantCenterHost}/callManagement/home">话务管理</a>
+                            </h3>
+                        </div>
+						<div id="announcementmenu" class="menu item on" style="display: none;">
+                            <h3 class="tree-node">
+                                <a target="frame" class="menu-item" data-leaf="true" href="$!{merchantCenterHost}/announcementService/home?menuKey=ANNOUCEMENT_LIST">门票服务</a>
+                            </h3>
+						</div>
+                        <div id="supplierServicemenu" class="menu item on" style="display: none;">
+                            <h3 class="tree-node"><a target="frame" href="$!{merchantCenterHost}/violation/home" data-leaf="true" class="menu-item">商家服务中心</a></h3>
+                        </div>
+					</div>
+				</td>
+				<td class="rig_bg"><div class="right" id="frame-container"></div></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+    window.context = {
+        permission: "sadmin",
+        merchantCenterHost: "$!{merchantCenterHost}"
+    };
+</script>

@@ -1,0 +1,49 @@
+#set($layout='layoutBlank.vm')
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<title>出错啦...</title>
+<link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/ocenter/order_new@2eb5e426ded6bcfe936508871553a4bc.css" />
+#include('layout/headerInclude.vm')
+</head>
+<body style="height:100%">
+<div class="tts_header" id="top">
+	<div class="login">
+		<div style="float:left;line-height:32px;white-space:nowrap;background:#f0f0f0"> <img src="http://source.qunar.com/piao/images/tts/ocenter/tips_logo.png" alt="qunar" style="position:relative;top:6px;float:left;margin-right:10px;vertical-align:top"><span>去哪儿网客户服务中心：10101234（如在境外拨打，请加拨0086）</span> </div>
+	</div>
+</div>
+<div class="tts_content" id="content" style="height:600px">
+	<div class="section">
+		<div class="content_none">
+			<div class="none_notes">#if($!errMsg) $errMsg #else 抱歉，您请求的页面出错啦，Qunar程序猿们正在加班修复，请稍候再来。#end</div>
+			<div class="none_do"><span class="txt_gray">点击返回</span><a href="javascript:void(0)" onclick="window.history.back();" hidefocus="true" class="do_blue">上一页</a></div>
+		</div>
+	</div>
+</div>
+<!--统一footer嵌套于此行后-->
+<div class="tts_footer">
+	<p>Qunar.com</p>
+</div>
+<script>
+document.getElementById("content").style.height = getViewPortHeight() - 140 + "px";
+window.onresize = function() {
+document.getElementById("content").style.height = getViewPortHeight() - 140 + "px";
+};
+function getViewPortHeight() {
+    var viewportheight;
+
+    if (typeof window.innerWidth != 'undefined') {
+        viewportheight = window.innerHeight
+    } else if (typeof document.documentElement != 'undefined' &&
+            typeof document.documentElement.clientWidth != 'undefined' &&
+            document.documentElement.clientWidth != 0) {
+        viewportheight = document.documentElement.clientHeight
+    } else {
+        viewportheight = document.getElementsByTagName('body')[0].clientHeight
+    }
+    return viewportheight;
+}
+</script>
+</body>
+</html>

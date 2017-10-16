@@ -1,0 +1,823 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Qunar管理后台</title>
+    <meta name="keywords" content="Qunar管理后台">
+    <meta name="description" content="Qunar管理后台">
+    <link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/detail@9b7bb908fafb9da417f93bc18cd3b781.css">
+    <link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/list@12d870584660f131bd2807926611a4c7.css">
+</head>
+
+<body>
+    #if($shiro.hasPermission("order_detail_order_base_info"))
+    <h3 class="caption"><i class="sign"></i>订单信息<div class="side">订单处理方式：<span class="txt_orange">$!{orderDetail.isManual}</span></div></h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                <tr>
+                    <td width="33%"><b>订单号：</b>$!{orderDetail.displayId}</td>
+                    <td width="33%"><b class="ml30">订单状态：</b><span class="txt_orange">$!{orderDetail.orderDisplayStatus}</span></td>
+                    <td width="33%">
+                        <b class="ml30">支付方式：</b>
+                        #if($!{orderDetail.payWay} == 'CASHPAY')
+                            景区支付
+                        #else
+                            $!{orderDetail.payBank}
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>下单时间：</b>$!dateTool.format("yyyy-MM-dd HH:mm",$!{orderDetail.createTime})</td>
+                    <td><b class="ml30">支付时间：</b>$!dateTool.format("yyyy-MM-dd HH:mm",$!{orderDetail.payTime})</td>
+                    <td><b class="ml30">支付流水号：</b>$!{orderDetail.paySeq}</td>
+                </tr>
+                <tr>
+                    <td><b>提前预订限制：</b>$!{orderDetail.limitEnterSightDes}</td>
+                    <td><b>订单取消设置：</b>$!{orderDetail.delayPayTimeDes}</td>
+                    <td>
+                        #if($!{orderDetail.expectPrintTime})
+                            <b>最晚确认时长：</b>$!{orderDetail.expectPrintTime}
+                        #end
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="info_cont top_line">
+        <div class="info_table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <b>产品id：</b>$!{orderDetail.productId}
+                    </td>
+                    <td>
+                        <b>产品名称：</b>
+                        <a href="/order/snapshot?displayId=$!{orderDetail.displayId}" target="_blank">$!{orderDetail.title}</a>
+                        #if($!orderDetail.passGuarantee)
+                            <img src="http://simg2.qunarzz.com/piao/images/tts/ocenter/safe_icon.png" alt="保障计划" style="vertical-align:middle" class="icon_safeguard">
+                        #end
+                        #if(($!{orderDetail.straightSaleType}==2) || ($!{orderDetail.straightSaleType}==1 && $!{orderDetail.qunarOperation}))
+                            <b class="bold txt_red"> 去哪儿直销</b>
+                        #elseif($!{orderDetail.qunarOperation})
+                            <strong class="tts_tags_inline">Qunar代理运营</strong>
+                        #end
+                        #if($!{orderDetail.needHotelCheck})
+                        <span style="background:#FF3399;color:#fff;padding:3px 4px;font-weight: bold;">第二次确认</span>
+                        #end
+                        #if($stringUtilsTool.isNotBlank($!{orderDetail.specificationDesc}))
+                            <br />
+                            <span style="color:#999">（$!{orderDetail.specificationDesc}）</span>
+                        #end
+
+                    </td>
+                    <td>
+                        #if($!{orderDetail.insuranceOrderNo})
+                            <b>保险订单号：</b>$!{orderDetail.insuranceOrderNo}
+                        #end
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> <b>所在城市：</b><span>$!{orderDetail.arrive}</span></td>
+                    <td> <b>数量：</b>
+                    <span>
+                        #if(!$orderDetail.legacyData)
+                            $!{orderDetail.quantity} #if($orderDetail.partner == "HOTEL" || $orderDetail.partner == "SPU_TICKET_HOTEL")份#else张#end
+                        #elseif($orderDetail.legacyData.taocanQuantity > 0)
+                            套餐&times;$orderDetail.legacyData.taocanQuantity（每份含
+                            成人&times;${math.div($orderDetail.legacyData.adultQuantity,$orderDetail.legacyData.taocanQuantity)}
+                            儿童&times;${math.div($orderDetail.legacyData.childQuantity,$orderDetail.legacyData.taocanQuantity)}
+                            ）
+                        #elseif($orderDetail.legacyData.adultQuantity > 0 && $orderDetail.legacyData.childQuantity == 0 && $orderDetail.legacyData.otherQuantity == 0)
+                            成人&times;$orderDetail.legacyData.adultQuantity
+                        #else
+                            成人&times;$orderDetail.legacyData.adultQuantity
+                            儿童&times;$orderDetail.legacyData.childQuantity
+                            其他&times;$orderDetail.legacyData.otherQuantity
+                        #end
+                    </span>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>订单金额：</b>
+                        <b class="price txt_orange">
+                            <em><span class="yen_font">&yen;</span>
+                             #if ($!{permission} != 'scenic')
+                                 $!numberTool.format($!math.div($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}),100))
+
+                                 #if($!{orderDetail.merchantSellMoney} != 0)
+                                     = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.merchantSellMoney},100))<span class="zh_font">（商家售卖价）</span>
+                                 #end
+
+                                 #if($!{orderDetail.expressFee} != 0)
+                                     + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.expressFee},100))<span class="zh_font">（快递费）</span>
+                                 #end
+
+                                 #if($!{orderDetail.forceQunarPrice} != 0)
+                                     + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.forceQunarPrice},100))<span class="zh_font">（代金券）</span>
+                                 #end
+                             #else
+                                 #if ($!{orderDetail.floorPriceUse})
+                                     $!numberTool.format($!math.div($!{orderDetail.settleAmount},100))
+                                     #if($!{orderDetail.merchantSellMoney} != 0)
+                                         = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.merchantSellMoney},100))<span class="zh_font">（商家售卖价）</span>
+                                     #end
+
+                                     #if($!{orderDetail.expressFee} != 0)
+                                         + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.expressFee},100))<span class="zh_font">（快递费）</span>
+                                     #end
+
+                                     #if($!{orderDetail.forceQunarPrice} != 0)
+                                         + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.forceQunarPrice},100))<span class="zh_font">（代金券）</span>
+                                     #end
+
+                                 #else
+                                     $!numberTool.format($!math.div($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}),100))
+
+                                     #if($!{orderDetail.merchantSellMoney} != 0)
+                                         = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.merchantSellMoney},100))<span class="zh_font">（商家售卖价）</span>
+                                     #end
+
+                                     #if($!{orderDetail.expressFee} != 0)
+                                         + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.expressFee},100))<span class="zh_font">（快递费）</span>
+                                     #end
+
+                                     #if($!{orderDetail.forceQunarPrice} != 0)
+                                         + <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.forceQunarPrice},100))<span class="zh_font">（代金券）</span>
+                                     #end
+
+                                 #end
+                             #end
+
+                            </em>
+                        </b>
+                    </td>
+                </tr>
+                #if ($!{orderDetail.money} != 0)
+                <tr>
+                    <td>
+                        <b>实付金额：</b>
+                        <b class="price txt_orange">
+                            <em><span class="yen_font">&yen;</span>
+                                #if ($!{permission} != 'scenic')
+                                    $!numberTool.format($!math.div($!{orderDetail.userOriginMoney},100))
+                                    #if($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}) != 0)
+                                        = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}),100))<span class="zh_font">（订单金额）</span>
+                                    #end
+		                            #if(${orderDetail.redPacketMoney} > 0 || ${orderDetail.couponMoney} > 0)
+		                                &nbsp;-&nbsp;
+		                                #if(${orderDetail.redPacketMoney} > 0)
+		                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.redPacketMoney},100))<span class="zh_font">（红包抵扣）</span>
+		                                #elseif(${orderDetail.couponMoney} > 0)
+		                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.couponMoney},100))<span class="zh_font">（代金券抵扣）</span>
+		                                #end
+		                            #end
+                                #else
+                                    #if ($!{orderDetail.floorPriceUse})
+                                        $!numberTool.format($!math.div($!{orderDetail.userOriginMoney},100))
+                                        #if($!numberTool.format($!math.div($!{orderDetail.settleAmount},100)) != 0)
+                                            = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.settleAmount},100))<span class="zh_font">（订单金额）</span>
+                                        #end
+										#if(${orderDetail.redPacketMoney} > 0 || ${orderDetail.couponMoney} > 0)
+			                                &nbsp;-&nbsp;
+			                                #if(${orderDetail.redPacketMoney} > 0)
+			                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.redPacketMoney},100))<span class="zh_font">（红包抵扣）</span>
+			                                #elseif(${orderDetail.couponMoney} > 0)
+			                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.couponMoney},100))<span class="zh_font">（代金券抵扣）</span>
+			                                #end
+			                            #end
+                                    #else
+                                        $!numberTool.format($!math.div($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}),100))
+                                        #if($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}) != 0)
+                                            = <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!math.sub($!{orderDetail.originMoney},$!{orderDetail.subsidyMoney}),100))<span class="zh_font">（订单金额）</span>
+                                        #end
+										#if(${orderDetail.redPacketMoney} > 0 || ${orderDetail.couponMoney} > 0)
+			                                &nbsp;-&nbsp;
+			                                #if(${orderDetail.redPacketMoney} > 0)
+			                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.redPacketMoney},100))<span class="zh_font">（红包抵扣）</span>
+			                                #elseif(${orderDetail.couponMoney} > 0)
+			                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.couponMoney},100))<span class="zh_font">（代金券抵扣）</span>
+			                                #end
+			                            #end
+                                    #end
+                                #end
+                            </em>
+                        </b>
+                    </td>
+                </tr>
+                #end
+                <tr>
+                    #if ($!{permission} != 'scenic')
+
+                        #if($!{orderDetail.qunarSubsidyMoney} != 0)
+                            <td>
+                                <b class="price txt_orange">补贴售卖：</b>
+                                <b class="price txt_orange">
+                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.qunarSubsidyMoney},100))
+                                </b>
+                            </td>
+                        #end
+
+
+                        #if($!{orderDetail.qunarCashBackMoney} != 0)
+                            <td>
+                                <b class="price txt_orange">补贴返现：</b>
+                                <b class="price txt_orange">
+                                <span class="yen_font">&yen;</span>$!numberTool.format($!math.div($!{orderDetail.qunarCashBackMoney},100))
+                                <span class="zh_font">（qunar补贴返现）</span>
+                                </b>
+                            </td>
+                        #end
+                    #end
+                </tr>
+
+                    #if($!{hotelDto})
+                        <tr>
+                            <td colspan="3">
+                                <b>酒店：</b>
+                                <span style="margin:0 0 0 5px;"><a href="/order/hotelOrderDetail?displayId=$!{hotelDto.displayId}">$!{hotelDto.hotelDisplayId}</a></span>
+                                <span style="margin:0 20px 0;"><a href="/order/hotelOrderSnapshot?displayId=$!{hotelDto.displayId}" target="_blank">$!{hotelDto.hotelName}$!{hotelDto.roomName}</a></span>
+                                <span>$!{hotelDto.stayDate}</span>&nbsp;
+                                <span>$!{hotelDto.hotelNightCount}晚</span>&nbsp;
+                                <span>|</span>&nbsp;
+                                <span>
+                                    #if(${hotelDto.breakfastCount}>0)
+                                        #set($breakfastCount = ${TextUtils.convertSimplifiedArabicNumber2ChineseNumber(${hotelDto.breakfastCount})})
+                                        #if(${breakfastCount} == "一")
+                                            单早&nbsp;
+                                        #elseif(${breakfastCount} == "二")
+                                            双早&nbsp;
+                                        #else
+                                            ${breakfastCount}早&nbsp;
+                                        #end
+                                    #else
+                                        不含早&nbsp;
+                                    #end
+                                    #if(${hotelDto.wifi}=="WIFI_FREE")
+                                        免费wifi&nbsp;
+                                    #elseif(${hotelDto.wifi}=="WIFI_COLLECT_FEES")
+                                        收费wifi&nbsp;
+                                    #elseif(${hotelDto.wifi}=="HAVE_NO_WIFI")
+                                        无wifi&nbsp;
+                                    #end
+                                    #if(${hotelDto.internet}=="INTERNET_FREE")
+                                        免费宽带&nbsp;
+                                    #elseif(${hotelDto.internet}=="INTERNET_COLLECT_FEES")
+                                        收费宽带&nbsp;
+                                    #elseif(${hotelDto.internet}=="HAVE_NO_INTERNET")
+                                        无宽带&nbsp;
+                                    #end
+                                    #if(${hotelDto.hasWindow})
+                                        有窗&nbsp;
+                                    #else
+                                        无窗&nbsp;
+                                    #end
+                                </span>
+                            </td>
+                        </tr>
+                    #end
+
+                     #if($!childTicketOrderList)
+                         #foreach($ticketItem in $childTicketOrderList)
+                         <tr>
+                             <td colspan="3"> <b>门票：</b>
+                                 <span style="margin:0 0 0 5px;"><a href="/order/view?displayId=$!{ticketItem.displayId}">$!{ticketItem.displayId}</a></span>
+                                 <span style="margin-left:20px;"><a href="/order/snapshot?displayId=$!{ticketItem.displayId}" target="_blank">$!{ticketItem.productName}</a></span>
+                                 <span>$!{ticketItem.validUseDateDescription}</span>&nbsp;
+                                 <span>$!{ticketItem.quantity}张</span>
+                                 <span class="txt_orange">$!{ticketItem.displayStatus}</span>
+                             </td>
+                         </tr>
+                         #end
+                     #end
+                    #if(!$!hotelDto && !$!childTicketOrderList)
+                        <tr>
+                            <td colspan="3"> <b> 有效日期：</b><span>$!{orderDetail.validUseDateDescription}</span></td>
+                        </tr>
+                    #end
+                <tr>
+                    #if($!{orderDetail.promote})
+                        <td><b>活动立减：</b><b class="price txt_orange">¥<em>$!numberTool.format($!math.div($!{orderDetail.reduceAmount},100))</em></b></td>
+                        <td> <b> 用户已支付：</b><b class="price txt_orange">¥<em>$!numberTool.format($!math.div($!{orderDetail.userPayAmount},100))</em></b></td>
+                    #end
+                </tr>
+                <tr>
+                    <td colspan="2"><b>不可使用日期：</b><span>$!{orderDetail.invalidUseDateDescription}</span></td>
+                    <td><b>最晚退款时间：</b><span>$!{orderDetail.lastRefundDate}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="info_cont top_dot">
+        <div class="info_table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    #if($shiro.hasPermission("order_detail_order_desc"))
+                    <tr>
+                        <td width="10%"><b>订单操作说明：</b></td>
+                        <td width="90%"><span>$!{orderDetail.orderDesc}</span></td>
+                    </tr>
+                    #end
+                    #if($stringUtilsTool.isNotBlank($!{orderDetail.passMessagePreview}))
+                    <tr>
+                        <td width="10%"><b>入园信息：</b></td>
+                        <td width="90%"><span>$!{orderDetail.passMessagePreview}</span></td>
+                    </tr>
+                    #end
+                <tr>
+                    <td width="10%"><b>客户留言：</b></td>
+                    <td width="90%"><span>$!{orderDetail.userMessage}</span></td>
+                </tr>
+                #if($stringUtilsTool.isNotBlank($!{orderDetail.promoter}))
+                <tr>
+                    <td width="10%"><b>推广人：</b></td>
+                    <td width="90%"><span>$!{orderDetail.promoter}</span></td>
+                </tr>
+                #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+    #if(!$null.isNull(${orderDetail.productExtensionInfos}) && ${orderDetail.productExtensionInfos.size()}>0)
+    <h3 class="caption"><i class="sign"></i>订单附加信息</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    #foreach($pei in $!{orderDetail.productExtensionInfos})
+                        <tr>
+                                <td width="10%"><b>$!{pei.name}:</b></td>
+                                <td width="90%">$!{pei.value}</td>
+                                <td></td>
+                        </tr>
+                #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+    #if($shiro.hasPermission("order_detail_contact"))
+    <h3 class="caption"><i class="sign"></i>联系人信息</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td width="33%"><b>联系人：</b><span>$!{orderDetail.contactUser}</span></td>
+                    <td width="33%"><b>手机号码：</b><span>$!{orderDetail.contactMobile}</span></td>
+                    <td width="33%"><b>身份证号：</b><span>$!{orderDetail.contactCardId}</span></td>
+                </tr>
+                <tr>
+                    <td width="33%"><b>邮&nbsp;&nbsp;箱：</b><span>$!{orderDetail.email}</span></td>
+                    #if($shiro.hasRole("supplier"))
+                        <td colspan="2">是否已回访：<span><input type="button" id="return-call-button" #if($orderDetail.returnCall)disabled="disabled"#end value="#if($orderDetail.returnCall)已回访#end#if(!$orderDetail.returnCall)未回访#end" /></span></td>
+                    #else
+                        <td colspan="2"><b>是否已回访：</b>#if($orderDetail.returnCall) <span class="txt_orange">已回访</span> #else <span>未回访</span> #end</td>
+                    #end
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+    #if($shiro.hasPermission("order_detail_post_address"))
+        #if($orderDetail.takeType)
+            #if($orderDetail.takeType == 0)
+            <h3 class="caption"><i class="sign"></i>邮寄地址</h3>
+            #else
+            <h3 class="caption"><i class="sign"></i>自取地址</h3>
+            #end
+        <div class="info_cont">
+            <div class="info_table">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                    <tr>
+                        <td width="33%">地址：<span>
+                            #if($orderDetail.takeType == 0)
+                                $!{orderDetail.postAddress}
+                             #else
+                                $!{orderDetail.takeAddress}
+                            #end
+
+                        </span></td>
+                    </tr>
+                    <tr>
+                        <td width="33%">邮编：<span>$!{orderDetail.postCode}</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        #else<!--如果不是实体票但是填写了信息-->
+            #if($stringUtilsTool.isNotBlank($!{orderDetail.postAddress}) && $stringUtilsTool.isNotBlank($!{orderDetail.postCode}) )
+            <h3 class="caption"><i class="sign"></i>邮寄地址</h3>
+            <div class="info_cont">
+                <div class="info_table">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                        <tr>
+                            <td width="33%">地址：<span>$!{orderDetail.postAddress}</span></td>
+                        </tr>
+                        <tr>
+                            <td width="33%">邮编：<span>$!{orderDetail.postCode}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            #end
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_passengers"))
+        #if(!$null.isNull(${orderDetail.passengers}) && ${orderDetail.passengers.size()}>0  && ${orderDetail.needPassengerInfo} )
+        <h3 class="caption"><i class="sign"></i>旅客信息</h3>
+        <div class="info_cont">
+            <div class="info_table">
+                <table class="param_info_table">
+                    <tbody>
+                    <tr>
+                        #if(${orderDetail.needPassengerName} )
+                            <th width="10%">姓名</th>
+                        #end
+                        #if(${orderDetail.needPassengerPinyin} )
+                            <th width="14%">拼音</th>
+                        #end
+                        #if(${orderDetail.needPassengerCard} )
+                            <th width="14%">证件类型</th>
+                            <th width="26%">证件</th>
+                        #end
+                        #if(${orderDetail.needPassengerUserDefinei} )
+                            <th width="18%">$!{orderDetail.passengerUserDefinedItemI}</th>
+                        #end
+                        #if(${orderDetail.needPassengerUserDefineii} )
+                            <th width="18%">$!{orderDetail.passengerUserDefinedItemII}</th>
+                        #end
+                    </tr>
+                        #foreach($passenger in $!{orderDetail.passengers})
+                        <tr>
+                            #if(${orderDetail.needPassengerName} )
+                                <td>$!{passenger.name}</td>
+                            #end
+                            #if(${orderDetail.needPassengerPinyin} )
+                                <td>$!{passenger.namePinyin}</td>
+                            #end
+                            #if(${orderDetail.needPassengerCard}  &&  $!{passenger.idType} && $stringUtilsTool.isNotBlank($!passenger.idNo))
+                                <td>${passenger.idType.desc}</td>
+                                <td><i class="icon i_man_id"></i><span>$!{passenger.idNo}</span></td>
+                            #elseif(${orderDetail.needPassengerCard})
+                                <td></td>
+                                <td></td>
+                            #end
+                            #if(${orderDetail.needPassengerUserDefinei} )
+                                <td>$!{passenger.userDefineiValue}</td>
+                            #end
+                            #if(${orderDetail.needPassengerUserDefineii} )
+                                <td>$!{passenger.userDefineiiValue}</td>
+                            #end
+                        </tr>
+                        #end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_cash_back"))
+        #if(${orderDetail.orderCashBackDto})
+        <h3 class="caption"><i class="sign"></i>返现信息</h3>
+        <div class="info_cont">
+            <div class="info_cont_total clrfix">
+                <div class="info_table">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                        <tr>
+                            <td width="33%"><b>已返现金额：</b><b class="price txt_orange">&yen;<em>$!{orderDetail.orderCashBackDto.alreadyCashBackMoney}</em></b></td>
+                            <td width="33%"><b>返现状态：</b><span class="txt_orange">$!{orderDetail.orderCashBackDto.cashBackStatus.display}</span></td>
+                            <td width="33%"><b>每张返现：</b><b class="price txt_orange">&yen;<em>$!{orderDetail.orderCashBackDto.perCashBackMoney}</em></b></td>
+                        </tr>
+                        #if( $stringUtilsTool.isNotBlank($!{orderDetail.orderCashBackDto.refundedMerchantCashBackMoney}) )
+                            <tr>
+                                <td width="33%"></td>
+                                <td width="33%">已退还商家返现：<span class="price txt_orange">&yen;<em>$!{orderDetail.orderCashBackDto.refundedMerchantCashBackMoney}</em></span></td>
+                                <td width="33%"></td>
+                            </tr>
+                            <tr>
+                                <td width="33%"></td>
+                                <td width="33%">返现退还时间：<span >$!dateTool.format("yyyy-MM-dd HH:mm",$!{orderDetail.orderCashBackDto.refundedMerchantCashBackTime})</span></td>
+                                <td width="33%"></td>
+                            </tr>
+                        #end
+                            #if($!orderDetail.orderAppraise)
+                                #if($!orderDetail.orderAppraise.score)
+                                <tr><td rolspan="3"><b>用户评分：</b>$!orderDetail.orderAppraise.score</td></tr>
+                                #end
+                                #if($!orderDetail.orderAppraise.comment)
+                                <tr><td rolspan="3"><b>用户点评：</b>$!orderDetail.orderAppraise.comment</td></tr>
+                                #end
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_use_quantity"))
+        #if(${orderDetail.resellType} == 2)
+            <div class="info_cont top_dot">
+                <div class="info_table">
+                    <table cellspacing="0" cellpadding="0" >
+                    #foreach($info in $orderDetail.orderConsumeCodeInfo)
+                        <tr>
+                            <td><span>电子票号$velocityCount ：</span><span>$!{info.consumeCode}</span></td>
+                            <td><span>对应B端订单号$velocityCount：</span>$!{info.displayId}</td>
+                            <td><span>消费状态</span><span>#if(${info.consumeStatus} == 1)已使用#else 未使用#end</span></td>
+                        </tr>
+                    #end
+                    </table>
+                </div>
+            </div>
+        #else
+            #if(${orderDetail.useQuantity} > 0)
+                <h3 class="caption"><i class="sign"></i>消费信息</h3>
+                <div class="info_cont">
+                    <div class="info_cont_total clrfix">
+                        <div class="unit">已消费总额：<span>$!{orderDetail.useQuantity}张</span></div>
+                    </div>
+                </div>
+            #end
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_refund_info"))
+        #if($orderDetail.refundMoneyTrace && ${orderDetail.refundMoneyTrace.size()}>0 )
+        <h3 class="caption"><i class="sign"></i>退款信息</h3>
+        <div class="info_cont">
+            <div class="info_cont_total clrfix">
+                <div class="unit">退款总金额：<strong class="spacing_l price txt_orange">&yen;<em>$!numberTool.format($!math.div($!{orderDetail.refundMoney},100))</em></strong></div>
+                <div class="unit">当前退款状态：<span>$!{orderDetail.orderDisplayStatus}</span></div>
+            </div>
+            <div class="info_cont_list">
+                #foreach(${moneyTrace} in ${orderDetail.refundMoneyTrace})
+                    <div class="info_cont_list_inner">
+                        <div class="info_table">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td width="30%">
+                                        #if($moneyTrace.refundStatus == 'REFUND_SUCCESS' || $moneyTrace.refundStatus == 'REFUND_OFFLINE')
+                                            实际退款：<span class="price">$!{moneyTrace.refundQuantity}张
+                                            &yen;<em>$!numberTool.format($!math.div($!{moneyTrace.refundMoney},100))</em>
+                                            #if($moneyTrace.expressFeeRefund != 0)
+                                            	（含快递<em>&yen;$!numberTool.format($!math.div($!{moneyTrace.expressFeeRefund},100))</em>）
+                                            #end
+	                                        #if(${moneyTrace.retainMoney} > 0 || ${moneyTrace.couponMoney} > 0)
+		                                        （退票款<em>&yen;$numberTool.format($math.div($math.add(${moneyTrace.refundMoney},${moneyTrace.retainMoney}),100))</em>，
+		                                        #if(${moneyTrace.retainMoney} > 0)
+		                                        	扣<em>&yen;$numberTool.format($math.div(${moneyTrace.retainMoney},100))</em>手续费，
+		                                        #end
+		                                        #if(${moneyTrace.couponMoney} > 0)
+		                                        	扣<em>&yen;$numberTool.format($math.div(${moneyTrace.couponMoney},100))</em>代金券，
+		                                        #end
+		                                        用户实际获得现金<em>&yen;$numberTool.format($math.div($math.sub(${moneyTrace.refundMoney},${moneyTrace.couponMoney}),100))</em>）
+		                                    #end
+		                                    </span>
+                                        #else
+                                            申请退款：<span class="price">$!{moneyTrace.applyRefundQuantity}张
+                                            &yen;<em>$!numberTool.format($!math.div($!{moneyTrace.applyRefundMoney},100))</em>
+                                            #if(${moneyTrace.retainMoney} > 0 || ${moneyTrace.couponMoney} > 0)
+                                            	（退票款<em>&yen;$numberTool.format($math.div($math.add(${moneyTrace.applyRefundMoney},${moneyTrace.retainMoney}),100))</em>，
+                                            	#if(${moneyTrace.retainMoney} > 0)
+		                                        	扣<em>&yen;$numberTool.format($math.div(${moneyTrace.retainMoney},100))</em>手续费，
+		                                        #end
+		                                        #if(${moneyTrace.couponMoney} > 0)
+		                                        	扣<em>&yen;$numberTool.format($math.div(${moneyTrace.couponMoney},100))</em>代金券，
+		                                        #end
+		                                        用户实际获得现金<em>&yen;$numberTool.format($math.div($math.sub(${moneyTrace.applyRefundMoney},${moneyTrace.couponMoney}),100))</em>）
+                                            #end
+                                            </span>
+                                        #end
+                                    </td>
+                                    <td width="30%">审核状态：<span>$!{moneyTrace.refundStatusDisplay}</span></td>
+                                    <td width="40%">&nbsp;</td>
+                                </tr>
+                                    #if($moneyTrace.refundStatus != 'APPROVING_BY_SUPPLIER' && $moneyTrace.refundStatus != 'APPROVING_BY_USER')
+                                    <tr>
+                                        <td>审核人：<span>$!{moneyTrace.operator}</span></td>
+                                        <td>
+                                            #if($moneyTrace.refundStatus == 'REFUND_SUCCESS' || ${moneyTrace.refundStatus} == 'REFUND_OFFLINE') 退款时间：#else 审核时间：#end<span>$!dateTool.format("yyyy-MM-dd HH:mm",$!{moneyTrace.operateTime})</span>
+                                        </td>
+                                        <td>审核备注：<span>$!{moneyTrace.refundMark}</span></td>
+                                    </tr>
+                                    #end
+                                <tr>
+                                    <td>申请人：<span>$!{moneyTrace.applier}</span></td>
+                                    <td>申请时间：<span>$!dateTool.format("yyyy-MM-dd HH:mm",$!{moneyTrace.createTime})</span></td>
+                                    <td>退款原因：<span>$!{moneyTrace.refundReason}</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">退款备注：<span class='order_refund_msg'>$!{moneyTrace.refundDesc}</span></td>
+                                </tr>
+                                #if($!{moneyTrace.sueStatus} == 1)
+                                    <tr>
+                                        <td colspan="3">操作：<a data-refundid="$!{moneyTrace.refundId}" class="refund_appeal" href="javascript:void(0)">退款申诉</a></td>
+                                    </tr>
+                                #end
+                                #if(${moneyTrace.couponMoney} > 0)
+                                	<tr><td colspan="3">代金券说明：退款时优先抵扣代金券金额，但代金券不退回，也不能抵扣退款手续费。</td></tr>
+                                #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                #end
+            </div>
+        </div>
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_order_sue"))
+        #if(${orderDetail.orderSue})
+        <h3 class="caption"><i class="sign"></i>退款申诉信息</h3>
+        <div class="info_cont">
+            <div class="info_cont_total clrfix">
+                <div class="unit">当前申诉状态：<span class="txt_green">$!{orderDetail.orderSue.sueStatus.displaySueStatus}</span></div>
+            </div>
+            <div class="info_cont_list">
+                <div class="info_cont_list_inner">
+                    <div class="info_item_large clrfix">
+                        <div class="unit">
+                            <div class="label">申请理由：</div>
+                            <div class="cont">
+                                <p class="des txt_gray">$!{orderDetail.orderSue.sueReason}</p>
+                            </div>
+                        </div>
+                        <div class="unit">
+                            <div class="label">申请时间：</div>
+                            <div class="cont">$!dateTool.format("yyyy-MM-dd HH:mm",$!{orderDetail.orderSue.gmtCreated})</div>
+                        </div>
+                    </div>
+                    <div class="info_item_large clrfix">
+                        <div class="unit">
+                            <div class="label">审核结果：</div>
+                            <div class="cont">
+                                #if($!{orderDetail.orderSue.sueStatus} == "SUE_ACCEPT" || $!{orderDetail.orderSue.sueStatus} == "SUE_REJECT")
+                                    <div class="des">$!{orderDetail.orderSue.sueStatus.displaySueStatus}</div>
+                                #end
+                            </div>
+                        </div>
+                        <div class="unit">
+                            <div class="label">审核时间：</div>
+                            <div class="cont">$!dateTool.format("yyyy-MM-dd HH:mm",$!{orderDetail.orderSue.sueOperateTime})</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_remark"))
+    <h3 class="caption"><i class="sign"></i>订单备注</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td style="text-align:left">
+                        <div class="linkman_remark">
+                            #if($stringUtilsTool.equals("supplier","$!{permission}"))
+                            <div class="notes"><textarea id="remarks">$!{orderDetail.remarks}</textarea></div>
+                            <div class="txt_gray">最多输入300字符</div>
+                            #else
+                            <div class="notes"><textarea disabled>$!{orderDetail.remarks}</textarea></div>
+                            #end
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #if($stringUtilsTool.equals("supplier","$!{permission}"))
+    <div class="full_do">
+        <input type="button" id="remarks-button" class="btn btn_orange" value="保存" />
+    </div>
+    #end
+    #end
+
+    #if($shiro.hasPermission("order_detail_operations"))
+    <h3 class="caption"><i class="sign"></i>操作日志</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    #if(${orderDetail.usrOperations})
+                        #foreach(${op} in ${orderDetail.usrOperations})
+                        <tr>
+                            <td width="16%" height="24">$!dateTool.format("yyyy-MM-dd HH:mm",$!{op.operateTime})</td>
+                            <td style="word-break: break-all; word-wrap:break-word;" width="30%">$!{op.operator}</td>
+                            <td>$!{op.remark}</td>
+                        </tr>
+                        #end
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+    #if($shiro.hasPermission("order_detail_sms"))
+    <h3 class="caption"><i class="sign"></i>短信记录</h3>
+    <form id="search-sms-form" method="post" action="/order/queryOrderSmsInfo">
+        <div class="info_cont">
+            <div>
+                短信接收方：
+                <input type="radio" id="smsReceiverType_0,1" name="smsReceiverType" value="0,1" />
+                <label for="smsReceiverType_0,1">全部</label>
+                <input type="radio" id="smsReceiverType_1" name="smsReceiverType" value="1" checked="true" />
+                <label for="smsReceiverType_1">用户</label>
+                <input type="radio" id="smsReceiverType_0" name="smsReceiverType" value="0" />
+                <label for="smsReceiverType_0">供应商</label>
+            </div>
+            <div id="sms-list-container"></div>
+            <div id="sms-pagination"></div>
+        </div>
+        <input type="hidden" name="displayId" value="$!{orderDetail.displayId}" />
+    </form>
+    #end
+
+    #if($shiro.hasPermission("order_detail_mail"))
+    <h3 class="caption"><i class="sign"></i>邮件记录</h3>
+    <form id="search-mail-form" method="post" action="/order/queryOrderMailInfo">
+        <div class="info_cont">
+            <div>
+                邮件接收方：
+                <input type="radio" id="mailReceiverType_0,1" name="mailReceiverType" value="0,1" checked="true" />
+                <label for="mailReceiverType_0,1">全部</label>
+                <input type="radio" id="mailReceiverType_1" name="mailReceiverType" value="1" />
+                <label for="mailReceiverType_1">用户</label>
+                <input type="radio" id="mailReceiverType_0" name="mailReceiverType" value="0" />
+                <label for="mailReceiverType_0">供应商</label>
+            </div>
+            <div id="mail-list-container"></div>
+            <div id="mail-pagination"></div>
+        </div>
+        <input type="hidden" name="displayId" value="$!{orderDetail.displayId}" />
+    </form>
+    #end
+
+    #if($shiro.hasPermission("order_detail_operations") && ($stringUtilsTool.equals("sadmin","$!{permission}") || $stringUtilsTool.equals("admin","$!{permission}")))
+    <h3 class="caption"><i class="sign"></i>订单支付日志</h3>
+    <div class="info_cont">
+        <div class="info_table">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    #if(${orderDetail.orderPayLogs})
+                        #foreach(${op} in ${orderDetail.orderPayLogs})
+                        <tr>
+                            <td style="border-top:1px dotted #ddd;" width="16%" height="24">$!dateTool.format("yyyy-MM-dd HH:mm",$!{op.operateTime})</td>
+                            <td style="border-top:1px dotted #ddd; word-break: break-all; word-wrap:break-word;" width="30%">$!{op.operator}</td>
+                            <td style="border-top:1px dotted #ddd;">$!{op.remark}</td>
+                        </tr>
+                        #end
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+    #end
+
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@b86a814a353d5f1ef0dc2fa2790e3245.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/list@9e2a8f0db9ae5d985ec6b9a99815548b.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/order/orderdetailpage@3b586150041ef27f11d5020f960e6737.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    window.context = {
+        displayId: "${orderDetail.displayId}",
+        price: "${orderDetail.originMoney}",
+        orderApi: "/order",
+        merchantCenterHost:"$!{merchantCenterHost}",
+        permission: "$!{permission}",
+        flag: "$!{orderDetail.straightSaleType}"
+    };
+    (new tts.cpanel.order.OrderDetailPageInit(window.context)).init();
+</script>
+</body>
+</html>

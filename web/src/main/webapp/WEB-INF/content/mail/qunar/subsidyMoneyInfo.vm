@@ -1,0 +1,46 @@
+<!--
+补贴金额消耗信息
+-->
+
+<mailSubject>补贴金额消耗监控信息</mailSubject>
+
+<mailContent>
+    <style type="text/css">
+        table { border: solid 1px #e1e1e8; border-collapse: collapse; }
+        tr td { padding: 3px 15px; height: 25px; border: solid 1px #e1e1e8; }
+        .head { background-color: #f7f7f9; }
+    </style>
+    昨日资金流水补贴金额总计：${totalSubsidyMoney}元 <br/>
+
+    #if(${subsidyList.size()}>0)
+        以下为按补贴金额从大到小排序的订单支付流水信息：
+        <table>
+            <tr class="head">
+                <td>补贴金额</td>
+                <td>订单号</td>
+                <td>供应商id</td>
+                <td>支付时间</td>
+                <td>订单张数</td>
+                <td>订单总金额</td>
+                <td>联系人</td>
+                <td>联系人电话</td>
+            </tr>
+            #foreach ($subsidy in $subsidyList)
+                <tr>
+                    <td>$!subsidy.subsidyMoney</td>
+                    <td>$!subsidy.displayId</td>
+                    <td>$!subsidy.supplierId</td>
+                    <td>$!subsidy.orderPayTime</td>
+                    <td>$!subsidy.orderQuantity</td>
+                    <td>$!subsidy.payMoney</td>
+                    <td>$!subsidy.contactUser</td>
+                    <td>$!subsidy.contactMobile</td>
+                </tr>
+            #end
+        </table>
+    #else
+        无对应流水
+    #end
+
+
+</mailContent>

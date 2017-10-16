@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <title>传真模板</title>
+    <meta name="keywords" content="传真模板"/>
+    <meta name="description" content="传真模板"/>
+    <style type="text/css">
+        /*reset*/
+        html {overflow-x: hidden;}
+        .page-rotate {
+            position: absolute;
+            top:150px;
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+            transform:rotate(90deg);
+            -ms-transform:rotate(90deg); /* IE 9 */
+            -moz-transform:rotate(90deg); /* Firefox */
+            -webkit-transform:rotate(90deg); /* Safari and Chrome */
+            -o-transform:rotate(90deg); /* Opera */
+        }
+        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
+        html{min-width:1030px}
+        body{font:normal 14px arial,sans-serif;color:#000}
+        ol,ul,li{list-style:none}
+        table{border-collapse:collapse;border-spacing:0}
+        th,td,strong{font-weight:400}
+        em,i{font-style:normal}
+        h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}
+        /*layout*/
+        .mp_fax{width:1030px;margin:0 auto}
+        .mp_fax_block{height:30px;padding:0 15px;line-height:30px;white-space:nowrap}
+        .mp_fax_block .left{float:left}
+        .mp_fax_block .right{float:right}
+        .mp_fax_head{border-bottom:1px solid #e3e3e3}
+        .mp_fax_foot{border-top:1px solid #e3e3e3}
+        .mp_fax_content{height:680px;margin:0 15px}
+        /*content*/
+        .mp_fax_title{position:relative}
+        .mp_fax_logo{position:absolute;left:0;top:32px}
+        .mp_fax_title table{width:100%}
+        .mp_fax_title td{height:140px;vertical-align:middle}
+        .mp_fax_title h1{padding:0 210px;font:700 30px/40px microsoft yahei,sans-serif;text-align:center}
+        .mp_fax_sub{margin:0 0 5px}
+        .mp_fax_sub li{display:inline-block;*display:inline;zoom:1;width:32%;font-size:14px;line-height:26px}
+        .mp_fax_table{width:100%}
+        .mp_fax_table th,
+        .mp_fax_table td{border:1px solid #c5c5c5;vertical-align:middle;text-align:center}
+        .mp_fax_table td table{margin:-1px;width:100%}
+        .mp_fax_table th{height:28px;font-weight:700}
+        .mp_fax_table td{height:40px;line-height:16px}
+        .mp_fax_notice{margin:5px 0 0}
+        .mp_fax_notice li{line-height:22px}
+    </style>
+</head>
+
+<body>
+<div class="mp_fax">
+    <div class="mp_fax_head mp_fax_block">
+        <span class="left">$!{date}</span>
+        <em class="right">传真单编号：$!{faxGroupId}</em>
+    </div>
+    <div class="mp_fax_content">
+        <div class="mp_fax_title">
+            <img class="mp_fax_logo" src="http://source.qunar.com/piao/images/fax/logo1.png" alt="去哪儿"/>
+            <table>
+                <tr>
+                    <td>
+                        <h1>确认单（#if($payWay == 0)在线支付产品#elseif($payWay == 3)景区支付产品#end）</h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <ul class="mp_fax_sub">
+            <li>To：<strong>$!{shopName}</strong></li>
+            <li>景区负责人：<strong>（姓名）$!{supplierConcatUser}</strong></li>
+            <li>Fax：<strong>$!{faxNum}</strong></li>
+            <li>From：<strong>去哪儿网--运营部</strong></li>
+            <li>运营负责人：<strong>（姓名）$!{qunarConcatUser}</strong></li>
+            <li>Tel：<strong>$!{qunarConcatMobile}</strong></li>
+        </ul>
+        <table class="mp_fax_table">
+            <thead>
+            <tr>
+                <th width="9%">去哪儿订单号</th>
+                <th width="8%">游玩时间</th>
+                <th width="17%">产品名称</th>
+                <th width="8%">取票人姓名</th>
+                <th width="9%">手机</th>
+                <th width="8%">游玩人姓名</th>
+                <th width="16%">身份证号</th>
+                <th width="6%">订购数量</th>
+                <th width="10%">订单总额(元)</th>
+                <th width="9%">订单备注</th>
+            </tr>
+            </thead>
+            <tbody>
+                #set($start = 0)
+                #set($end = $faxList.size() - 1)
+                #set($range = [$start..$end])
+                #foreach($i in $range)
+                    #set($fax = $faxList.get($i))
+                <tr>
+                    <td>$!{fax.displayId}</td>
+                    <td>$!dateTool.format("yyyy-MM-dd",$!{fax.useDate})</td>
+                    <td>
+                        $!{fax.productName}
+                        #if($stringUtilsTool.isNotBlank($!{fax.specification}))
+                            <br />
+                            <span style="color:#999">（$!{fax.specification}）</span>
+                        #end
+                    </td>
+                    <td>$!{fax.contactUser}</td>
+                    <td>$!{fax.contactMobile}</td>
+                    <td>
+                        <table style="border:0 none;">
+                            <tbody>
+                                #foreach($passenger in $!{fax.passengers})
+                                    <tr>
+                                        <td style="#if ($foreach.index != $fax.passengers.size() - 1)border:0 none;border-bottom:1px solid #c5c5c5#elseif($foreach.index == $fax.passengers.size() - 1)border:0 none;#end">$!{passenger.passengerName}</td>
+                                    </tr>
+                                #end
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table style="border:0 none;">
+                            <tbody>
+                                #foreach($passenger in $!{fax.passengers})
+                                <tr>
+                                    <td style="#if ($foreach.index != $fax.passengers.size() - 1)border:0 none;border-bottom:1px solid #c5c5c5#elseif($foreach.index == $fax.passengers.size() - 1)border:0 none;#end">$!{passenger.cardNo}</td>
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>$!{fax.quantity}</td>
+                    <td>$!{fax.money}</td>
+                    <td>$!{fax.remarks}</td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+        <ol class="mp_fax_notice">
+            <li>1.请务必妥善保存本表，以便于核对游客预订信息，如实际入园多于订购数量，请提醒游客多出数量按产品门市价购票入园，如实际入园少于订购数量，请按实际入园数量收取游客费用。</li>
+            <li>2.收到本表后，请注意查收订单确认短信并立即作回复，短信回复费用由去哪儿网承担，感谢配合！</li>
+            <li>3.本表作为双方核单依据之一，请妥善保管，在结算时按实际入园人数进行对账结算。</li>
+            <li>4.传真问题请直接与对接业务人员联系。</li>
+        </ol>
+    </div>
+    <div class="mp_fax_foot mp_fax_block">
+        <strong class="left">去哪儿网(piao.qunar.com)</strong>
+        <span class="right">当前第<em>$!{currentPageNo}</em>页&nbsp;&nbsp;共<em>$!{totalNo}</em>页</span>
+    </div>
+</div>
+</body>
+</html>

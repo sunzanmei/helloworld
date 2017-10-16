@@ -1,0 +1,7 @@
+<!--
+现付预订成功：供应商
+-->
+
+<smsContent>
+    【新】${productTitle}。${orderQuantity}份。(${orderOrigin}元)#if($!{userContactName})联系人：${userContactName}，#{end}联系电话：${userContact}。
+</smsContent>

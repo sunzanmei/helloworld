@@ -1,0 +1,15 @@
+<!--
+动作发起者：支付中心回调
+发起动作：退款失败
+接收方：去哪儿管理员
+-->
+
+<mailSubject>门票订单退款失败 ${debug}</mailSubject>
+
+<mailContent>
+请线下处理，订单号：${displayId},支付流水号：${paySeq}，退款流水号${traceSeq}
+支付中心回调，通知退款失败
+接口返回值：${retStatus}
+接口得到的数据：
+${params}
+</mailContent>

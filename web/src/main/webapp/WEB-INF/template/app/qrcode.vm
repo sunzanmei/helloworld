@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+<html>
+<head></head>
+<body></body>
+</html>
+-->
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>门票二维码</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="false" id="twcClient" name="twcClient" />
+    <style type="text/css">
+        h2 {font-size:20px;line-height:25px;padding:5px;margin:0;border-bottom:1px solid #ccc;color:#16387C;}
+        .qrcode {margin: 10px;padding-top: 25px;padding-bottom: 25px;border-bottom:1px solid #ddd;}
+    </style>
+</head>
+<body>
+
+<h2>验证电子票</h2>
+
+#if($!{orderEtickets})
+    #foreach($eticket in $!{orderEtickets.etickets})
+        <p class="qrcode" data-eticket="$!{eticket.eticketString}"></p>
+    #end
+#end
+
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    var renderType = document.createElement("canvas").getContext ? "canvas" : "table";
+    var codeList = $(".qrcode");
+    for(var i=0; i<codeList.length; i++) {
+        var codeItem = codeList.eq(i);
+        codeItem.qrcode({text: codeItem.attr("data-eticket"), render: renderType});
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<td colspan="2"><label for="abnormalStatus" class="unit bold">异常订单</label>
+    <select name="abnormalStatus" id="abnormalStatus">
+        <option value="">不限</option>
+        <option value="APPROVE_TICKET_APPROVING_REFUND">同意退票待退款</option>
+        #if(!$stringUtilsTool.equals("supplier","$!{permission}"))
+        <!--<option value="APPROVE_PART_TICKET_APPROVING_REFUND">同意部分退票待退款</option> -->
+        <option value="APPROVING_BY_SUPPLIER_FAIL">待审核退款同步失败</option>
+        <option value="AUTO_TICKET_APPROVING_REFUND">自动退票待退款</option>
+        <option value="PREPAY_ORDER_PAYED_TIMEOUT">已支付同步超时</option>
+        #end
+    </select>
+</td>
+

@@ -1,0 +1,6 @@
+<!--
+部分退款成功，用户
+-->
+<smsContent>
+您的订单${displayId}【$productName】商家已发货，快递公司${expressName}，快递单号${expressNum},请注意查收。
+</smsContent>

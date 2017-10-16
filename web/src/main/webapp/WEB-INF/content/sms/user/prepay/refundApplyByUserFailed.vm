@@ -1,0 +1,6 @@
+<!--
+用户申请退款，用户
+-->
+<smsContent>
+您购买的【${productTitle}】（订单号${orderDisplayId}），因为系统忙，暂时无法受理此次退款，若有任何疑问请及时联系商家：${supplierTel}
+</smsContent>

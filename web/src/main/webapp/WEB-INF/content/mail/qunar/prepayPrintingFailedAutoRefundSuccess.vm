@@ -1,0 +1,11 @@
+<!--
+代码中已删除，保留一段时间后删除
+预付，出票失败，自动退款成功，通知qunar
+-->
+
+<mailSubject>【预付出票失败】$supplierShopName【自动退款成功】$orderDisplayId</mailSubject>
+
+<mailContent>
+显示订单号：$orderDisplayId
+订单退款原因：$reason
+</mailContent>

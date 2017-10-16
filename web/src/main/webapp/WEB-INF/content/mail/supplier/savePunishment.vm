@@ -1,0 +1,10 @@
+<!--
+保存供应商处罚邮件
+-->
+<mailSubject>$mailTitle</mailSubject>
+
+<mailContent>
+    $mailContent
+    去哪儿网门票业务部</br>
+    $now</br>
+</mailContent>

@@ -1,0 +1,6 @@
+<!--
+预付，出票成功，用户(一日游产品)
+-->
+<smsContent>
+（${productTitle}）已支付成功，订单号：${orderDisplayId};份数：${orderQuantity}，使用日期：【${takeOffDate}】当日。出团确认：商家会在出游【$!{supplierNoticeDate}】前与您确认出团信息，若【$!{supplierNoticeTime}】后未能获得联系，请立即致电【${supplierShopName}】#{if}(${supplierDidTel}&&${supplierDidTel}!="")（$!{supplierDidTel}）#{end};晚于出发$!{supplierNoticeDate}的订单，请自行致电商家咨询
+</smsContent>

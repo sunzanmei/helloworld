@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Qunar管理员后台</title>
+	<meta name="keywords" content="Qunar管理员后台">
+	<meta name="description" content="Qunar管理员后台">
+	<link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/new@ce09f9018ec5e80445caf67ce0aa2678.css">
+</head>
+<body>
+<form method="post" id="whitesettingform"  method="post" action="/sadmin/autoRefundConfig/saveAutoRefundConfig">
+<div class="caption_new"><strong>1</strong>基础设置</div>
+<div class="content_new">
+<table class="content_table">
+<tr>
+	<th>自动退款开关：</th>
+	<td>
+		<div class="cont_tab_unit">
+			<label for="autoRefund_true"><input type="radio" value="true" name="autoRefund" class="input_radio" id="autoRefund_true" #if(${autoRefundConfig.autoRefund}) checked="checked"#end>开启</label>
+			<label for="autoRefund_false"><input type="radio" value="false" name="autoRefund" class="input_radio" id="autoRefund_false" #if(!${autoRefundConfig.autoRefund}) checked="checked"#end>关闭</label>
+			<span class="form_new_notes m20l"><i class="warn">i</i>(自动退款指: 商家未按时审核退款,系统自动审核通过同意退款给用户)</span>
+		</div>
+	</td>
+</tr>
+<tr>
+	<th>自动退款时间：</th>
+	<td>
+		<div class="cont_tab_unit">
+			<input type="text" name="autoRefundHours" value="$!{autoRefundConfig.autoRefundHours}" class="" id="autoRefundHours" /> 小时(工作日)
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+<div class="fixed_bar" style="margin: -30px 0 20px 0;">
+	<div class="fixed_bar_inner" style="position: relative;">
+		<input id="savebutton" type="button" value="保存" hidefocus="true" class="btn btn_orange" />
+	</div>
+</div>
+
+<div id="whitelist" style="padding-bottom: 150px;">
+<div class="caption_new"><strong>2</strong>白名单设置</div>
+<div class="content_new">
+	<div style="margin: 10px 0 0 0;"><span class="form_new_notes m20l"><i class="warn">i</i>设置白名单的商家,未审核退款订单将不会自动退款。白名单只适用于供应商，暂不适用于分销商</span></div>
+	<div id="list-container"></div>
+	<div class="content_explain"><a href="javascript:void(0)" hidefocus="true" class="do_link" id="whiteaddbutton"><i class="icon i_plus"></i>新增</a></div>
+</div>
+</div>
+</form>
+
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@b86a814a353d5f1ef0dc2fa2790e3245.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/operation/autorefund/pageinit@98eaf09bc5835abcf759bf54f481a16c.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	window.context = {
+		api: '/sadmin/autoRefundConfig',
+		permission: "sadmin"
+	};
+	(new tts.cpanel.operation.autorefund.PageInit(context)).init();
+</script>
+</body>
+</html>

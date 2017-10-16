@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title>Qunar管理员后台</title>
+	<meta name="keywords" content="Qunar管理员后台">
+	<meta name="description" content="Qunar管理员后台">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="http://q.qunarzz.com/piao_tts/prd/styles/v2/list@12d870584660f131bd2807926611a4c7.css" />
+</head>
+<body>
+<h3 class="caption"><i class="sign"></i>下载结算对账表</h3>
+<div class="list_condition" style="padding: 10px 10px 200px 10px;">
+	<form action="/$!{permission}/settlement/downloadSettlementDetail" method="get" id="frm1" target="secretIFrame">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+			<tr height="25">
+				<td colspan="4"><div class="bold">每日对账表</div></td>
+			</tr>
+			<tr height="25">
+				<td colspan="4"> 请选择要导出报表的起止时间 </td>
+			</tr>
+			<tr height="25">
+				<td width="150"><input type="text" name="fromDate" id="begintime1" /></td>
+				<td width="30">&nbsp;到&nbsp;</td>
+				<td width="150"><input type="text" name="toDate" id="endtime1" /></td>
+				<td><input type="submit" value="下载"/></td>
+			</tr>
+		</table>
+	</form>
+	<iframe id="secretIFrame" src="" style="display: none; visibility: hidden;"></iframe>
+
+</div>
+<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/base@ba2d4c123cb3074278981e0c8d9afcba.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/cpanel@b86a814a353d5f1ef0dc2fa2790e3245.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://q.qunarzz.com/js/qdatepicker/build/qdatepicker-0.1.min.js"></script>
+<script src="http://q.qunarzz.com/piao_tts/prd/scripts/cpanel/order/ordersettlementpage@d6f930dd6abe4124fd7fb1e02a206a76.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	window.context = {
+		permission: "$!{permission}"
+	};
+	(new tts.cpanel.order.OrderSettlementPageInit).init();
+</script>
+</body>
+</html>

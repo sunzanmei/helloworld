@@ -1,0 +1,144 @@
+#if($shiro.hasAnyRoles("qadmin","sadmin"))
+<td colspan="2">
+    <label for="queryOrderStatus" class="unit bold">订单状态</label>
+    <select id="queryOrderStatus" name="queryOrderStatus">
+        <option value="">不限</option>
+        <option value="CONSUMED">已消费</option>
+        <option value="PART_CONSUMED">部分已消费</option>
+        <option value="CASH_PAY_SUCCESS">预订成功</option>
+        <option value="PREPAY_SUCCESS">支付成功</option>
+        <option value="PREPAY_ORDER_INIT">下单同步中</option>
+        <option value="UN_PAY">待支付</option>
+        <option value="APPROVING_BY_SUPPLIER">待供应商审核退款</option>
+        <option value="APPROVING_BY_QUNAR">等待退款</option>
+        <option value="APPLY_REJECT_BY_USER">用户拒绝退款</option>
+        <option value="APPLY_REJECT_BY_SUPPLIER">供应商拒绝退款</option>
+        <option value="APPLY_REJECT_BY_QUNAR">Qunar拒绝退款</option>
+        <option value="REFUND_SUCCESS">退款成功</option>
+        <option value="PART_REFUND">部分退款成功</option>
+        <option value="PART_CANCELED">部分退票成功</option>
+        <option value="PREPAY_ORDER_PRINTING">已支付同步中</option>
+        <option value="CASHPAY_ORDER_PRINTING">现付订单同步中</option>
+        <option value="APPROVING_BY_USER">商家退款待用户审核</option>
+        <option value="HANDLING_REFUND">退款处理中</option>
+        <option value="AUTO_REFUND_SUCCESS">自动退款成功</option>
+        <option value="ORDER_CANCEL">订单已取消</option>
+        <option value="REFUND_OFFLINE">已线下退款</option>
+        <option value="SECOND_CONFIRM">订单确认中</option>
+        <option value="PREPAY_CHECKED_UNCONSUMED">已入住未入园</option>
+        <option value="PREPAY_CHECKED_PART_CONSUMED">已入住部分入园</option>
+        <option value="PREPAY_UNCHECKED_PART_CONSUMED">待入住部分入园</option>
+        <option value="PREPAY_UNCHECKED_CONSUMED">待入住已入园</option>
+    </select>
+</td>
+#elseif($shiro.hasAnyRoles("callCenter","specialRate"))
+<td colspan="2">
+        <label for="queryOrderStatus" class="unit bold">订单状态</label>
+        <select id="queryOrderStatus" name="queryOrderStatus">
+            <option value="">不限</option>
+            <option value="CONSUMED">已消费</option>
+            <option value="PART_CONSUMED">部分已消费</option>
+            <option value="CASH_PAY_SUCCESS">预订成功</option>
+            <option value="PREPAY_SUCCESS">支付成功</option>
+            <option value="PREPAY_ORDER_INIT">下单同步中</option>
+            <option value="UN_PAY">待支付</option>
+            <option value="APPROVING_BY_SUPPLIER">待供应商审核退款</option>
+            <option value="APPROVING_BY_QUNAR">等待退款</option>
+            <option value="APPLY_REJECT_BY_USER">用户拒绝退款</option>
+            <option value="APPLY_REJECT_BY_SUPPLIER">供应商拒绝退款</option>
+            <option value="APPLY_REJECT_BY_QUNAR">Qunar拒绝退款</option>
+            <option value="REFUND_SUCCESS">退款成功</option>
+            <option value="PART_REFUND">部分退款成功</option>
+            <option value="PART_CANCELED">部分退票成功</option>
+            <option value="PREPAY_ORDER_PRINTING">已支付同步中</option>
+            <option value="CASHPAY_ORDER_PRINTING">现付订单同步中</option>
+            <option value="APPROVING_BY_USER">商家退款待用户审核</option>
+            <option value="HANDLING_REFUND">退款处理中</option>
+            <option value="AUTO_REFUND_SUCCESS">自动退款成功</option>
+            <option value="ORDER_CANCEL">订单已取消</option>
+            <option value="REFUND_OFFLINE">已线下退款</option>
+            <option value="SECOND_CONFIRM">订单确认中</option>
+        </select>
+</td>
+#elseif($stringUtilsTool.equals("supplier","$!{permission}"))
+<td colspan="2">
+    <label for="queryOrderStatus" class="unit bold">订单状态</label>
+    <select id="queryOrderStatus" name="queryOrderStatus" data-value="$!{orderStatus}">
+        <option value="">不限</option>
+        <option value="PREPAY_SUCCESS">支付成功</option>
+        <option value="CASH_PAY_SUCCESS">现付成功</option>
+        <option value="APPROVING_BY_SUPPLIER">待商家审核退款</option>
+        <option value="HANDLING_REFUND">退款处理中</option>
+        <option value="APPROVING_BY_USER">商家退款待用户确认</option>
+        <option value="APPLY_REJECT_BY_USER">用户拒绝退款</option>
+        <option value="APPLY_REJECT_BY_QUNAR">管理员拒绝退款</option>
+        <option value="APPLY_REJECT_BY_SUPPLIER">供应商拒绝退款</option>
+        <option value="PART_REFUND">部分退款成功</option>
+        <option value="PART_CANCELED">部分退票成功</option>
+        <option value="REFUND_SUCCESS">退款成功</option>
+        <option value="AUTO_REFUND_SUCCESS">自动退款成功</option>
+        <option value="REFUND_OFFLINE">已线下退款</option>
+        <option value="CONSUMED">已消费</option>
+        <option value="PART_CONSUMED">部分已消费</option>
+        <option value="ORDER_CANCEL">订单已取消</option>
+        <option value="SECOND_CONFIRM">订单确认中</option>
+        <option value="PREPAY_CHECKED_UNCONSUMED">已入住未入园</option>
+        <option value="PREPAY_CHECKED_PART_CONSUMED">已入住部分入园</option>
+        <option value="PREPAY_UNCHECKED_PART_CONSUMED">待入住部分入园</option>
+        <option value="PREPAY_UNCHECKED_CONSUMED">待入住已入园</option>
+    </select>
+</td>
+#elseif($shiro.hasRole("scenicOrder"))
+<td colspan="2">
+    <label for="queryOrderStatus" class="unit bold">订单状态</label>
+    <select id="queryOrderStatus" name="queryOrderStatus">
+        <option value="">不限</option>
+        <option value="PREPAY_SUCCESS">支付成功</option>
+        <option value="CASH_PAY_SUCCESS">现付成功</option>
+        <option value="APPROVING_BY_SUPPLIER">待商家审核退款</option>
+        <option value="HANDLING_REFUND">退款处理中</option>
+        <option value="APPROVING_BY_USER">商家退款待用户确认</option>
+        <option value="APPLY_REJECT_BY_USER">用户拒绝退款</option>
+        <option value="APPLY_REJECT_BY_QUNAR">管理员拒绝退款</option>
+        <option value="APPLY_REJECT_BY_SUPPLIER">供应商拒绝退款</option>
+        <option value="PART_REFUND">部分退款成功</option>
+        <option value="PART_CANCELED">部分退票成功</option>
+        <option value="REFUND_SUCCESS">退款成功</option>
+        <option value="AUTO_REFUND_SUCCESS">自动退款成功</option>
+        <option value="REFUND_OFFLINE">已线下退款</option>
+        <option value="CONSUMED">已消费</option>
+        <option value="PART_CONSUMED">部分已消费</option>
+        <option value="ORDER_CANCEL">订单已取消</option>
+        <option value="SECOND_CONFIRM">订单确认中</option>
+    </select>
+</td>
+#elseif($stringUtilsTool.equals("distributor","$!{permission}"))
+<td colspan="2">
+    <label for="queryOrderStatus" class="unit bold">订单状态</label>
+    <select id="queryOrderStatus" name="queryOrderStatus">
+        <option value="">不限</option>
+        <option value="ORDER_INIT">订单初始化</option>
+        <option value="PRINT_SUCCESS">预订成功</option>
+        <option value="PRINT_FAILURE">下单失败</option>
+        <option value="CONSUMED">已使用</option>
+        <option value="PART_CONSUMED">部分已使用</option>
+        <option value="ORDER_CANCELED">订单已取消</option>
+        <option value="ORDER_PRINTING">订单处理中</option>
+        <option value="UN_PAY">待支付</option>
+        <option value="AUTO_REFUND_FAILURE">自动退款中</option>
+        <option value="REFUND_SUCCESS">退款成功</option>
+        <option value="PART_REFUND">部分退款成功</option>
+        <option value="PART_CANCELED">部分退票成功</option>
+        <option value="PRINT_FAILURE_REFUND_SUCCESS">预订失败退款成功</option>
+        <option value="PRINT_FAILURE_REFUND_FAILURE">自动退票待退款</option>
+        <option value="REFUND_OFFLINE">已线下退款</option>
+        <option value="PREPAY_APPROVING_BYSUPPLIER_NOTICEFAIL">待商家审核退款</option>
+        <option value="PREPAY_APPROVED_BYSUPPLIER">同意退票待退款</option>
+        <option value="APPLY_REJECT_BY_SUPPLIER">商家拒绝退款</option>
+        <option value="PREPAY_REJECT_BYQUNAR">拒绝退款</option>
+    </select>
+</td>
+#end
+
+
+

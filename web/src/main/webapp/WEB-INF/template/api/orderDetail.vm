@@ -1,0 +1,67 @@
+#if($stringUtilsTool.isNotBlank($!orderDetail.contactEmail)
+|| $stringUtilsTool.isNotBlank($!orderDetail.contactAddress)
+|| $stringUtilsTool.isNotBlank($!orderDetail.contactZipCode) )
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555"&#555">
+    #if($stringUtilsTool.isNotBlank($!{orderDetail.contactEmail}))
+    <div><span>取票人Email：$!{orderDetail.contactEmail}</span></div>
+    #end
+    #if($stringUtilsTool.isNotBlank($!{orderDetail.contactAddress}))
+    <div><span>邮寄地址：$!{orderDetail.contactAddress}</span></div>
+    #end
+    #if($stringUtilsTool.isNotBlank($!{orderDetail.contactZipCode}))
+    <div><span>邮编：$!{orderDetail.contactZipCode}</span></div>
+    #end
+</div>
+#end
+
+#if($!{orderDetail.orderPassengerList} && $orderDetail.orderPassengerList.size()>0 )
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555">
+    #set($count=1)
+    #foreach($passenger in $!{orderDetail.orderPassengerList} )
+        <div>
+            <span style="display:inline-block;margin-right:10px;white-space:nowrap;">游客$count：#if($stringUtilsTool.isNotBlank($!passenger.name))$!passenger.name#end#if($stringUtilsTool.isNotBlank($!passenger.pinyinName))&nbsp;|&nbsp;$!passenger.pinyinName  #end </span>
+            #if($stringUtilsTool.isNotBlank($passenger.idNo) && $stringUtilsTool.isNotBlank($passenger.idType))
+                <span style="display:inline-block;margin-left:43px;white-space:nowrap;">$passenger.idType：$passenger.idNo</span>
+            #end
+            #if($stringUtilsTool.isNotBlank($passenger.userDefineiKey) && $stringUtilsTool.isNotBlank($!passenger.userDefineiValue))
+                <span style="display:inline-block;margin-left:43px;white-space:nowrap;">$passenger.userDefineiKey：$passenger.userDefineiValue</span>
+            #end
+            #if($stringUtilsTool.isNotBlank($passenger.userDefineiiKey) && $stringUtilsTool.isNotBlank($!passenger.userDefineiiValue))
+                <span style="display:inline-block;margin-left:43px;white-space:nowrap;">$passenger.userDefineiiKey：$passenger.userDefineiiValue</span>
+            #end
+            #set($count=$count+1)
+        </div>
+    #end
+</div>
+#end
+
+#if($!{orderDetail.validUseDateDescription} )
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555">
+    <div><span>有效日期：$!{orderDetail.validUseDateDescription}</span></div>
+</div>
+#end
+
+#if($stringUtilsTool.isNotBlank($!{orderDetail.invalidUseDateDescription}))
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555">
+    <div><span>不可使用日期：$!{orderDetail.invalidUseDateDescription}</span></div>
+</div>
+#end
+
+#if($!orderDetail.sightList && $!orderDetail.sightList.size()>0)
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555"&#555">
+<div><span>所在景区：
+    #foreach($sight in $!orderDetail.sightList)
+        $!sight&nbsp;
+    #end
+        </span></div>
+    #if($!orderDetail.sightAddress && $stringUtilsTool.isNotBlank($!orderDetail.sightAddress))
+    <div><span>景区地址：$!orderDetail.sightAddress</span></div>
+    #end
+</div>
+#end
+
+#if($!orderDetail.userMessage && $stringUtilsTool.isNotBlank($!orderDetail.userMessage))
+<div style="padding:5px 0;border-top:1px dotted #ddd;font-size:12px;line-height:30px;color:#555"&#555">
+<div><span>订单备注：$!{orderDetail.userMessage}</span></div>
+</div>
+#end

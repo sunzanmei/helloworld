@@ -1,0 +1,3 @@
+<smsContent>
+【退款订单到期提醒】店铺名为：${shopName}的有${autoRefundOrderCount}笔退款订单将于明日自动审核退款。为了避免不必要的损失，请尽快审核。
+</smsContent>

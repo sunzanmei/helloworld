@@ -1,0 +1,25 @@
+<!--
+动作发起者：系统
+发起动作：每日下午5点
+接收方： MenpiaoSS@qunar.com
+-->
+
+<mailSubject>$!mailSubject</mailSubject>
+
+<mailContent>
+
+</mailContent>
+	
+<mailAttachment>
+	<filePath>
+		$!filePath
+    </filePath>
+	
+	<fileName>
+		$!fileName
+    </fileName>
+	
+	<fileDesc>
+		$!fileDesc
+    </fileDesc>
+</mailAttachment>
