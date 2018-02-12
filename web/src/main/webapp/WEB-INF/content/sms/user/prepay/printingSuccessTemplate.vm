@@ -1,9 +1,0 @@
-<!--
-预付，出票成功，用户
--->
-<smsContent>
-    #{if}($!{partner} == "HOTEL" || $!{partner} == "SPU_TICKET_HOTEL")
-        您购买的${productTitle}（订单号${orderDisplayId}）已支付成功！入住时间：${hotelConsumeTime}，门票游玩时间：${hotelPiaoConsumeTime}。#{if}(${orderEticket}&&${orderEticket}!="")【电子票：${orderEticket}】。#{end}#{if}(${passMessageInfo}&&${passMessageInfo}!="")$!{passMessageInfo}。#{end} 如有疑问，请咨询服务商${supplierShopName} ${supplierTel}。
-    #{else}
-        本产品由“#if(${straightSaleType}==2)【去哪儿直销】#elseif(${straightSaleType}==1)【景区官方直销】#{else}服务商${supplierShopName}#{end}”（${supplierTel}）为您提供服务。#{if}(${orderEticket}&&${orderEticket}!="")【电子票：${orderEticket}】。#{end}您购买的${orderQuantity}份【${productTitle}】已支付成功（订单号：${orderDisplayId}）。有效期：${orderUsedate}。#{if}(${soldOutDate}&&${soldOutDate}!="")部分日期不可使用，具体请查看订单详情。#{end}#{if}(${passMessageInfo}&&${passMessageInfo}!="")$!{passMessageInfo}。#{end}#{end}【温馨提示】在去哪儿预订门票成功后，按产品规则使用但无法入园，联系商家后10分钟仍未解决，可在景区售票处购票入园并保留票根，去哪儿核实责任方后赔付您差价。
-</smsContent>

@@ -1,6 +1,0 @@
-<!--
-预付，订单确认失败，用户
--->
-<smsContent>
-    尊敬的用户您好，感谢您预订【${productTitle}】。由于酒店房间已售光，预订不成功，系统已原路退回支付款项，1-7个工作日内到账。带来的不便深表歉意。若有任何问题，请联系服务商【${supplierShopName}】：$!{supplierDidTel}
-</smsContent>

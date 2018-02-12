@@ -1,7 +1,0 @@
-<!--
-预付，返现成功通知用户
--->
-
-<smsContent>
-    您购买的产品${productTitle}（订单号：${orderDisplayId}）已成功领取${alreadyBackQuantity}张返现，共返${alreadyBackMoney}元。将于3个工作日之内打入您的“去哪儿余额”账户中。该金额可用于购买去哪儿网其他产品或提现至银行账户。欢迎今后继续在去哪儿网订票http://qunar.com
-</smsContent>

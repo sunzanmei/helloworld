@@ -1,9 +1,0 @@
-<!--
-动作发起者：用户
-发起动作：申请退款,0秒退
-接收方：供应商
--->
-
-<smsContent>
-【${productTitle}】（订单号${orderDisplayId}，总金额${orderOrigin}元），由于此订单用户在去哪儿网上的交易诚信记录良好，退款已先行审核通过，退款金额${orderRefundMoney}元，请尽快处理。如对退款有疑义，可提供凭证发起申诉。如申诉成功，退款有误部分由qunar承担。
-</smsContent>

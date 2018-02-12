@@ -1,6 +1,0 @@
-<!--
-返现即将结束，提醒用户
--->
-<smsContent>
-    您购买的产品【${productTitle}】（订单号${orderDisplayId}）还有${remainBackMoney}元返现未领取，将于3日之后过期，请尽快领取哦！
-</smsContent>

@@ -1,6 +1,0 @@
-<!--
-现付预订出票失败：用户
--->
-<smsContent>
-订单号${orderDisplayId}，${productTitle} 出票失败，您可点击${touchUrl}，重新预订。
-</smsContent>

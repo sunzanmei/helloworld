@@ -1,8 +1,0 @@
-<!--
-代码中已删除，保留一段时间后删除
--->
-<mailSubject>【${shopName}】有【周末惠游】自动出票失败的订单，请尽快处理！订单号：${orderDisplayId}）</mailSubject>
-
-<mailContent>
-【${shopName}】请注意！您在去哪儿网门票有一笔【周末惠游】的订单自动出票失败，订单号：${orderDisplayId}，取票人姓名：${contactName}，取票人电话：${contactMobile}。请尽快手动出票，以免引起用户投诉。
-</mailContent>

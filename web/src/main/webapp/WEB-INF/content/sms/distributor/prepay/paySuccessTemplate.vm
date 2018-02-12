@@ -1,6 +1,0 @@
-<!--
-预付，支付成功，分销商紧急联系人
--->
-<smsContent>
- 本产品由“#if(${straightSaleType}==2)【去哪儿直销】#elseif(${straightSaleType}==1)【景区官方直销】#{else}服务商${supplierShopName}#{end}”（${supplierTel}）为您提供服务。您购买的${orderQuantity}份【${productTitle}】已支付成功（订单号：${orderDisplayId}）。有效期：${orderUsedate}。#{if}(${soldOutDate}&&${soldOutDate}!="")部分日期不可使用，具体请查看订单详情。#{end}#{if}(${passMessageInfo}&&${passMessageInfo}!="")$!{passMessageInfo}。#{end}【温馨提示】供应商出票成功后，按产品规则使用但无法入园，请联系供应商处理，若供应商超过10分钟仍未解决，可通过景区购票入园保留票根，并告知去哪儿（010-81040373，工作日9:00-19:00）核实后赔付差价。
-</smsContent>

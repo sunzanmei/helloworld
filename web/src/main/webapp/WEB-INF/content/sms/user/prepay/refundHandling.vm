@@ -1,4 +1,0 @@
-##供应商或管理员审核退款处理中给用户发短信
-<smsContent>
-您好，您的退款订单【${productTitle}】（订单号${orderDisplayId}，总金额${orderOrigin}元）#if(${straightSaleType}==2)【去哪儿直销】#elseif(${straightSaleType}==1)【景区官方直销】#{else}服务商【${supplierShopName}】#end 正在核实消费状态，需要一定时间，最晚将于${autoRefundTime}完成审核，请耐心等待。如有疑问，请咨询：${supplierTel}。
-</smsContent>

@@ -1,6 +1,0 @@
-<!--
-部分退款成功，用户
--->
-<smsContent>
-您的订单【${productTitle}】（订单号${orderDisplayId}，总金额${orderOrigin}元）已同意部分退款，退款金额${orderRefundMoney}元，将于1-7个工作日按原支付方式退回，请注意查收。如有疑问，请咨询#if(${straightSaleType}==2)【去哪儿直销】#elseif(${straightSaleType}==1)【景区官方直销】#{else}服务商【${supplierShopName}】#end：${supplierTel}或去哪儿网 10101234
-</smsContent>

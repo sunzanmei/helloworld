@@ -1,6 +1,0 @@
-<!--
-代码中已删除，保留一段时间后删除
--->
-<smsContent>
-    【${shopName}】请注意！您在去哪儿网门票有一笔【周末惠游】的订单无法自动出票，订单号：${orderDisplayId}，取票人姓名：${contactName}，取票人电话：${contactMobile}。请尽快手动出票，以免引起用户投诉。
-</smsContent>

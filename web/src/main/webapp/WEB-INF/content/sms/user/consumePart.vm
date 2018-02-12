@@ -1,6 +1,0 @@
-<!--
-现付，预付消费：【部分电子票】 用户
--->
-<smsContent>
-您的订单${productTitle}（订单号${orderDisplayId}）已使用${orderUseQuantity}份，剩余${orderLeftQuantity}份未使用，有效期：${orderUsedate}。祝出行愉快！了解更多优惠，欢迎关注去哪儿门票官方微信号qunarp。
-</smsContent>

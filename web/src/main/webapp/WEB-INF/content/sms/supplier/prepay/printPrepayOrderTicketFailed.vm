@@ -1,7 +1,0 @@
-<!--
-发起动作：预付订单出票失败
-接收方：供应商
--->
-<smsContent>
-    订单号：${displayId}，您的接口超过10分钟未返回出票结果，造成出票失败。请登录http://tts2.piao.qunar.com/home及时处理订单，以免不必要的损失以及投诉。
-</smsContent>>

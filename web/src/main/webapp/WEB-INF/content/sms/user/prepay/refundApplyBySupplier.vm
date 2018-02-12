@@ -1,6 +1,0 @@
-<!--
-商家申请退款，商家
--->
-<smsContent>
-    您好，服务商【${supplierShopName}】(${supplierTel}）发起退款：【${productTitle}】，退款：${orderRefundQuantity}份，${orderRefundMoney}元。若确认退款请回复：${orderDisplayId}+Y。若超过30分钟未回复，系统将自动拒绝退款，若回复其他内容视为无效。您亦可访问：${touchUrl}，在线操作退款订单。
-</smsContent>

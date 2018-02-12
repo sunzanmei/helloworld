@@ -1,7 +1,0 @@
-<!--
-预付，出票成功，用户(组合订单)
--->
-<smsContent>
-    #set($numb = 1)
-    门票有效期：${orderUsedate}。#foreach (${childTicketInfo} in $!{childTicketInfoList})      ${numb}.【$!{childTicketInfo.productName}】#{if}(${childTicketInfo.eticketString}&&${childTicketInfo.eticketString}!="")【电子票：${childTicketInfo.eticketString}】#{end}#{if}(${childTicketInfo.passMessagePreview}&&${childTicketInfo.passMessagePreview}!=""),$!{childTicketInfo.passMessagePreview}。#{else}。#{end}#set($numb = $numb + 1)#{end} 其他详情查看请点击：http://touch.piao.qunar.com/touch/order/detail.htm?order_id=${orderDisplayId} 。
-</smsContent>
